@@ -13,7 +13,7 @@ namespace Acesv2.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString: "Data Source=localhost\\SQLEXPRESS; Initial Catalog=Dados;Integrated Security=True;");
+            optionsBuilder.UseSqlServer(connectionString: "Data Source=localhost; Initial Catalog=Dados;Integrated Security=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
