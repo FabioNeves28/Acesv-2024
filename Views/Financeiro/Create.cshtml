@@ -1,0 +1,105 @@
+﻿@model Acesvv.Models.Financeiro
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Financeiro</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Mes" class="control-label">Mês</label>
+              
+                    <select asp-for="Mes" class="form-control">
+                        <option value="">Selecione o mês</option>
+                        <option value="Janeiro">Janeiro</option>
+                        <option value="Fevereiro">Fevereiro</option>
+                        <option value="Março">Março</option>
+                        <option value="Abril">Abril</option>
+                        <option value="Maio">Maio</option>
+                        <option value="Junho">Junho</option>
+                        <option value="Julho">Julho</option>
+                        <option value="Agosto">Agosto</option>
+                        <option value="Setembro">Setembro</option>
+                        <option value="Outubro">Outubro</option>
+                        <option value="Novembro">Novembro</option>
+                        <option value="Dezembro">Dezembro</option>
+                    
+                    </select>
+                <span asp-validation-for="Mes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Saldo_Mes" class="control-label"></label>
+                <input asp-for="Saldo_Mes" class="form-control" />
+                <span asp-validation-for="Saldo_Mes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Arrecadacao_Mensalidade_Atrasada" class="control-label"></label>
+                <input asp-for="Arrecadacao_Mensalidade_Atrasada" class="form-control" />
+                <span asp-validation-for="Arrecadacao_Mensalidade_Atrasada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Arrecadacao_Mensalidade_Antecipadas" class="control-label"></label>
+                <input asp-for="Arrecadacao_Mensalidade_Antecipadas" class="form-control" />
+                <span asp-validation-for="Arrecadacao_Mensalidade_Antecipadas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vencimento" class="control-label"></label>
+                <input asp-for="Vencimento" class="form-control" />
+                <span asp-validation-for="Vencimento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contabilidade" class="control-label"></label>
+                <input asp-for="Contabilidade" class="form-control" />
+                <span asp-validation-for="Contabilidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tarifa_Bancaria" class="control-label"></label>
+                <input asp-for="Tarifa_Bancaria" class="form-control" />
+                <span asp-validation-for="Tarifa_Bancaria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apolice_Seguro" class="control-label"></label>
+                <input asp-for="Apolice_Seguro" class="form-control" />
+                <span asp-validation-for="Apolice_Seguro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Advogada" class="control-label"></label>
+                <input asp-for="Advogada" class="form-control" />
+                <span asp-validation-for="Advogada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Renovacao_Assinatura" class="control-label"></label>
+                <input asp-for="Renovacao_Assinatura" class="form-control" />
+                <span asp-validation-for="Renovacao_Assinatura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Taxas_Bancarias" class="control-label"></label>
+                <input asp-for="Taxas_Bancarias" class="form-control" />
+                <span asp-validation-for="Taxas_Bancarias" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Taxa_Internet" class="control-label"></label>
+                <input asp-for="Taxa_Internet" class="form-control" />
+                <span asp-validation-for="Taxa_Internet" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

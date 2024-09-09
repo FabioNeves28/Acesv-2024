@@ -1,0 +1,430 @@
+﻿@using Microsoft.Data.SqlClient;
+@model Acesv.Models.Dados
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Dados</h4>
+<hr />
+<style>
+    .multiselect {
+        width: 200px;
+    }
+
+    .selectBox {
+        position: relative;
+    }
+
+        .selectBox select {
+            width: 100%;
+            font-weight: bold;
+        }
+
+    .overSelect {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+    #checkboxes {
+        display: none;
+        border: 1px #dadada solid;
+    }
+
+        #checkboxes label {
+            display: block;
+        }
+
+            #checkboxes label:hover {
+                background-color: #1e90ff;
+            }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+        .switch input {
+            display: none;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+    .slider-text {
+        position: absolute;
+        display: block;
+        width: 60px;
+        text-align: center;
+        line-height: 34px;
+        color: white;
+        font-weight: bold;
+        transition: .4s;
+    }
+
+        .slider-text:before {
+            content: attr(data-on);
+        }
+
+    input:checked + .slider .slider-text:before {
+        content: attr(data-off);
+    }
+
+    /* Add your custom CSS styles here */
+    .row {
+        display: flex;
+        justify-content: center;
+    }
+
+    .col-md-4 {
+        width: 50%;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .multiselect {
+        position: relative;
+        width: 100%;
+    }
+
+    .selectBox {
+        position: relative;
+    }
+
+        .selectBox select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+    .overSelect {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+
+    #checkboxes {
+        display: none;
+        border: 1px solid #ccc;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+        #checkboxes label {
+            display: block;
+            margin: 10px;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* Add more custom styles as needed */
+
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#Cep').on('change', function () {
+            var cep = $(this).val();
+            if (cep.length === 8) {
+                $.ajax({
+                    url: 'https://viacep.com.br/ws/' + cep + '/json/',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#Endereco').val(data.logradouro);
+                        $('#Bairro').val(data.bairro);
+                    },
+                    error: function () {
+                        // Tratar erro, se necessário
+                    }
+                });
+            }
+        });
+    });
+    var expanded = false;
+
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+    function toggleSwitch() {
+        var switchText = document.getElementById('switchText');
+        var toggleSwitch = document.getElementById('toggleSwitch');
+
+        if (toggleSwitch.checked) {
+            switchText.innerText = 'Remover';
+        } else {
+            switchText.innerText = 'Adicionar';
+        }
+    }
+
+
+</script>
+
+   
+   @{
+
+    var userEmail = User.Identity.Name;
+    int Chave_ADM = 0;
+
+    using (var connection = new SqlConnection(@"Data Source=localhost\SQLEXPRESS; Initial Catalog=Dados;Integrated Security=True;"))
+    {
+        connection.Open();
+
+        // Consulta SQL para obter o valor de Chave_ADM do usuário logado na tabela AspNetUsers
+        var queryChave = "SELECT Chave_ADM FROM AspNetUsers WHERE UserName = @UserEmail";
+        using (var commandChave = new SqlCommand(queryChave, connection))
+        {
+            commandChave.Parameters.AddWithValue("@UserEmail", userEmail);
+            var chaveResult = commandChave.ExecuteScalar();
+
+            if (chaveResult != null && int.TryParse(chaveResult.ToString(), out int chaveInt))
+            {
+                Chave_ADM = chaveInt;
+
+                // Consulta SQL para obter o campo Id na tabela Dados com base no valor de Chave_ADM
+                var queryId = "SELECT Id FROM AspNetUsers WHERE Chave_ADM = @Chave_ADM";
+                using (var commandId = new SqlCommand(queryId, connection))
+                {
+                    commandId.Parameters.AddWithValue("@Chave_ADM", Chave_ADM);
+                    var idResult = commandId.ExecuteScalar();
+                    if (idResult != null && int.TryParse(idResult.ToString(), out int idInt))
+                    {
+                        Chave_ADM = idInt;
+                    }
+                }
+            }
+        }
+    }
+}
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="EscolaId" class="control-label">Escolas</label><br />
+                
+                <div class="multiselect">
+                    <div class="selectBox" onclick="showCheckboxes()">
+                        <select>
+                            <option>Selecione...</option>
+                        </select>
+                        <div class="overSelect"> </div>
+                    </div>
+                    <div id="checkboxes" class="teste">
+                        @foreach (var escola in ViewBag.Escolas)
+                        {
+                            <div class="form-check">
+                                <label class="form-check-label" for="chk_@escola.Value">
+                                    <input class="form-check-input" type="checkbox" name="EscolaId" value="@escola.Value" id="chk_@escola.Value" @(Model.EscolasSelecionadas != null && Model.EscolasSelecionadas.Split(',').Any(e => e == escola.Value.ToString()) ? "checked" : "")>
+
+
+
+                                    @escola.Text
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Nome Completo</label>
+                <input asp-for="NomeCompleto" placeholder="Insira seu nome completo" class="form-control" required />
+                <span asp-validation-for="NomeCompleto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apelido" class="control-label"></label>
+                <input asp-for="Apelido" placeholder="Ex.: Tio Fulano" class="form-control" required />
+                <span asp-validation-for="Apelido" class="text-danger" placeholder="Ex.: Tio Fulano"></span>
+            </div>
+   @if (Chave_ADM != 1)
+                {
+                    <div class="form-group">
+
+                <label asp-for="Cpf" class="control-label"></label>
+                <input asp-for="Cpf" class="form-control" readonly />
+                <span asp-validation-for="Cpf" class="text-danger"></span>
+                
+                </div>
+            }
+            @if (Chave_ADM == 1)
+            {
+                <div class="form-group">
+
+                    <label asp-for="Cpf" class="control-label"></label>
+                    <input asp-for="Cpf" class="form-control" />
+                    <span asp-validation-for="Cpf" class="text-danger"></span>
+
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="Telefone" class="control-label"></label>
+                <input asp-for="Telefone" oninput="mascara(this, 'tel')" placeholder="Ex.: (13)99123-4567" class="form-control" required />
+                <span asp-validation-for="Telefone" class="text-danger" placeholder="Ex.: Tio Fulano"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Data de Nascimento</label>
+                <input asp-for="Data_Nascimento" class="form-control" type="date" />
+                <span asp-validation-for="Data_Nascimento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Placa" class="control-label"></label>
+                <input asp-for="Placa" oninput="formatPlaca(this)" placeholder="ABC-1234" class="form-control" style="text-transform: uppercase;" required>
+                <span asp-validation-for="Placa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Prefixo" class="control-label"></label>
+                <input asp-for="Prefixo" placeholder="Ex.: 07" class="form-control" required />
+                <span asp-validation-for="Prefixo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bairros" class="control-label"></label>
+                <input asp-for="Bairros" placeholder="Insira aqui seus bairros separados por vírgula" class="form-control" style="height:100px;" required />
+                <span asp-validation-for="Bairros" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Veiculo" class="control-label"></label>
+                <input asp-for="Veiculo" placeholder="Ex.: Sprinter" class="form-control" required />
+                <span asp-validation-for="Veiculo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ano" class="control-label"></label>
+                <input asp-for="Ano" placeholder="Ex.: 2011" class="form-control" />
+                <span asp-validation-for="Ano" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cnh" class="control-label"></label>
+                <input asp-for="Cnh" placeholder="Número que consta na sua CNH" class=" form-control" maxlength="10" required />
+                <span asp-validation-for="Cnh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Categoria da CNH</label>
+                <select asp-for="CategoriaSelecionada" class="form-control" required>
+                    <option value="" required>Selecione uma categoria</option>
+                    @foreach (var categoria in ViewData["Categorias"] as List<SelectListItem>)
+                    {
+                        <option value="@categoria.Value" required>@categoria.Text</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoriaSelecionada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Validade" class="control-label"></label>
+                <input asp-for="Validade" class="form-control" type="date" required />
+                <span asp-validation-for="Validade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cep" class="control-label"></label>
+                <input asp-for="Cep" placeholder="Ex.: 11350-026" class="form-control" required />
+                <span asp-validation-for="Cep" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Endereço</label>
+                <input asp-for="Endereco" class="form-control" required />
+                <span asp-validation-for="Endereco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bairro" class="control-label"></label>
+                <input asp-for="Bairro" class="form-control" required />
+                <span asp-validation-for="Bairro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Número" class="control-label"></label>
+                <input asp-for="Número" placeholder="Insira o número de sua residência" class="form-control" required />
+                <span asp-validation-for="Número" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Complemento" class="control-label"></label>
+                <input asp-for="Complemento" class="form-control" />
+                <span asp-validation-for="Complemento" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

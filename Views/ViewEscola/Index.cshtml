@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Acesv.Models.Dados>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@if (ViewBag.Transportadores.Count > 0)
+{
+    <table class="table">
+        <tr>
+            <th>Apelido</th>
+            <th>Prefixo</th>
+            <th>Bairros</th>
+        </tr>
+        @foreach (var transportador in Model)
+        {
+            <tr>
+                <td>@transportador.Apelido</td>
+                <td>@transportador.Prefixo</td>
+                <td>@transportador.Bairros</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>Nenhum transportador encontrado para essa escola.</p>
+}

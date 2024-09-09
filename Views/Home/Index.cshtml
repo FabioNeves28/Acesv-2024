@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Encontre seu transportador!</h1>
+    <p>sssss<a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <form asp-area="ViewEscola" asp-controller="ViewEscola" asp-action="Index" method="get">
+        <div class="form-group">
+            <label for="escolaSelect">Escolha uma escola:</label>
+            <select class="form-control" id="escolaSelect" name="nomeEscolaEscolhida" onchange="redirecionarParaEscola(this)">
+                <option value="">Selecione uma escola</option>
+                @foreach (var escola in ViewBag.Escolas)
+                {
+                    <option value="@escola.Text">@escola.Text</option>
+                }
+            </select>
+        </div>
+       aaaaa
+    </form>
+
+    <script>
+        function redirecionarParaEscola(selectElement) {
+            var nomeEscolaEscolhida = selectElement.value;
+            if (nomeEscolaEscolhida !== "") {
+                window.location.href = `/ViewEscola/Index?nomeEscolaEscolhida=${encodeURIComponent(nomeEscolaEscolhida)}`;
+            }
+        }
+    </script>
+
+
+
+</div>
+

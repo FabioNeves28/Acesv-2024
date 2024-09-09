@@ -1,0 +1,394 @@
+﻿@using Microsoft.Data.SqlClient;
+@model Acesv.Models.Dados
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Insira seus dados</h1>
+
+
+<hr />
+<style>
+    .multiselect {
+        width: 200px;
+    }
+
+    .selectBox {
+        position: relative;
+    }
+
+        .selectBox select {
+            width: 100%;
+            font-weight: bold;
+        }
+
+    .overSelect {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+    #checkboxes {
+        display: none;
+        border: 1px #dadada solid;
+    }
+
+        #checkboxes label {
+            display: block;
+        }
+
+            #checkboxes label:hover {
+                background-color: #1e90ff;
+            }
+</style>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#Cep').on('change', function () {
+            var cep = $(this).val();
+            if (cep.length === 8) {
+                $.ajax({
+                    url: 'https://viacep.com.br/ws/' + cep + '/json/',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#Endereco').val(data.logradouro);
+                        $('#Bairro').val(data.bairro);
+                    },
+                    error: function () {
+                        // Tratar erro, se necessário
+                    }
+                });
+            }
+        });
+    });
+
+    var expanded = false;
+
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+    $(document).ready(function () {
+        var $campo = $("#cnh");
+        $campo.mask('000000000000', { reverse: true });
+    });
+
+
+</script>
+@{
+    // Obtém o email do usuário logado
+    var userEmail = User.Identity.Name;
+
+    // Variável para armazenar o CPF do usuário logado
+    var CpfUser = "";
+
+    // Executa a consulta SQL para obter o valor do campo EditId
+
+    using (var connection = new SqlConnection(@"Data Source=localhost\SQLEXPRESS; Initial Catalog=Dados;Integrated Security=True;"))
+    {
+        connection.Open();
+
+        // Consulta SQL para obter o CPF do usuário logado com base no email
+        var queryCpf = "SELECT Cpf FROM AspNetUsers WHERE UserName = @UserEmail";
+        using (var commandCpf = new SqlCommand(queryCpf, connection))
+        {
+            commandCpf.Parameters.AddWithValue("@UserEmail", userEmail);
+            var cpfResult = commandCpf.ExecuteScalar();
+            if (cpfResult != null)
+            {
+                CpfUser = cpfResult.ToString();
+            }
+        }
+    }
+    
+}
+<script>
+    function mascara(i, t) {
+   var v = i.value;
+   var maxLength;
+
+   if (t === "data") {
+      maxLength = 10;
+      if (v.length === 2 || v.length === 5) i.value += "/";
+   } else if (t === "cep") {
+      maxLength = 9;
+      if (v.length === 5) i.value += "-";
+   } else if (t === "tel") {
+      maxLength = 14;
+      if (v.length === 2) i.value = "(" + v + ")";
+      if (v.length === 4 || v.length === 9) i.value += "-";
+   }
+    else if (t == "numeroInput"){
+      maxLength = 4
+    }
+    else if (t == "cnh"){
+      maxLength = 12
+    }
+    else if (t == "prefixo"){
+      maxLength = 12
+    }
+   i.setAttribute("maxlength", maxLength);
+   
+   if (isNaN(v[v.length - 1])) {
+      i.value = v.substring(0, v.length - 1);
+   }
+}
+var inputElement = document.getElementById("numeroInput");
+
+// Adicione um ouvinte de evento de entrada para detectar quando algo é digitado
+inputElement.addEventListener("input", function () {
+    // Obtenha o valor atual do campo de entrada
+    var valor = inputElement.value;
+
+    // Use uma expressão regular para remover caracteres não numéricos
+    valor = valor.replace(/[^0-9]/g, '');
+
+    // Defina o valor atualizado de volta no campo de entrada
+    inputElement.value = valor;
+});
+ function formatPlaca(input) {
+      // Remove todos os caracteres que não são letras ou dígitos
+      input.value = input.value.replace(/[^a-zA-Z0-9]/g, "");
+
+      // Adiciona o hífen na posição correta
+      if (input.value.length > 3) {
+        input.value = input.value.substring(0, 3) + "-" + input.value.substring(3);
+      }
+      
+      // Limita o tamanho máximo da placa
+      if (input.value.length > 8) {
+        input.value = input.value.substring(0, 8);
+      }
+    }
+</script>
+<style>
+    /* Add your custom CSS styles here */
+   
+    .row {
+        display: flex;
+        justify-content: center;
+    }
+
+    .col-md-4 {
+        width: 50%;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .multiselect {
+        position: relative;
+        width: 100%;
+    }
+
+    .selectBox {
+        position: relative;
+    }
+
+        .selectBox select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+    .overSelect {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+
+    #checkboxes {
+        display: none;
+        border: 1px solid #ccc;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+        #checkboxes label {
+            display: block;
+            margin: 10px;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+   
+
+</style>
+<div class="background-input">
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+
+                <label asp-for="EscolaId" class="control-label">Escolas</label><br />
+                <div class="multiselect">
+                    <div class="selectBox" onclick="showCheckboxes()">
+                        <select>
+                            <option>Selecione...</option>
+                        </select>
+                        <div class="overSelect"> </div>
+                    </div>
+                    <div id="checkboxes" class="teste">
+                        @foreach (var escola in ViewBag.Escolas)
+                        {
+                            var isChecked = ViewBag.EscolasSelecionadas != null && ViewBag.EscolasSelecionadas.Contains(escola.Value.ToString());
+                            <div class="form-check">
+
+                                <label class="form-check-label" for="chk_@escola.Value">
+                                    <input class="form-check-input" type="checkbox" name="EscolaId" value="@escola.Value" id="chk_@escola.Value" @(isChecked ? "checked" : "") required>
+                                    @escola.Text
+                                </label>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label class="control-label">Nome Completo</label>
+                    <input asp-for="NomeCompleto" placeholder="Insira seu nome completo" class="form-control" required />
+                <span asp-validation-for="NomeCompleto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apelido" class="control-label"></label>
+                <input asp-for="Apelido" placeholder="Ex.: Tio Fulano" class="form-control" required />
+                <span asp-validation-for="Apelido" class="text-danger" placeholder="Ex.: Tio Fulano"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cpf" class="control-label"></label>
+                    <input asp-for="Cpf" class="form-control" readonly value="@CpfUser" placeholder="Ex.: 123.456.789-01" required />
+                <span asp-validation-for="Cpf" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefone" class="control-label"></label>
+                    <input asp-for="Telefone" oninput="mascara(this, 'tel')" placeholder="Ex.: (13)99123-4567" class="form-control" required/>
+                <span asp-validation-for="Telefone" class="text-danger" placeholder="Ex.: Tio Fulano"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Data de Nascimento</label>
+                <input asp-for="Data_Nascimento" class="form-control" type="date"/>
+                <span asp-validation-for="Data_Nascimento" class="text-danger"></span>
+            </div>
+                <div class="form-group">
+                    <label asp-for="Placa" class="control-label"></label>
+                    <input asp-for="Placa" oninput="formatPlaca(this)" placeholder="ABC-1234" class="form-control" style="text-transform: uppercase;" required> 
+                    <span asp-validation-for="Placa" class="text-danger"></span>
+                </div>
+            <div class="form-group">
+                <label asp-for="Prefixo" class="control-label"></label>
+                <input asp-for="Prefixo" placeholder="Ex.: 07" class="form-control" required />
+                <span asp-validation-for="Prefixo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bairros" class="control-label"></label>
+                    <input asp-for="Bairros" placeholder="Insira aqui seus bairros separados por vírgula" class="form-control" style="height:100px;" required />
+                <span asp-validation-for="Bairros" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Veiculo" class="control-label"></label>
+                    <input asp-for="Veiculo" placeholder="Ex.: Sprinter" class="form-control" required />
+                <span asp-validation-for="Veiculo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ano" class="control-label"></label>
+                    <input asp-for="Ano" placeholder="Ex.: 2011" class="form-control" />
+                <span asp-validation-for="Ano" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cnh" class="control-label"></label>
+                    <input asp-for="Cnh" placeholder="Número que consta na sua CNH" class=" form-control" maxlength="10" required />
+                <span asp-validation-for="Cnh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Categoria da CNH</label>
+                <select asp-for="CategoriaSelecionada" class="form-control" required>
+                    <option value="" required>Selecione uma categoria</option>
+                    @foreach (var categoria in ViewData["Categorias"] as List<SelectListItem>)
+                    {
+                        <option value="@categoria.Value" required>@categoria.Text</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoriaSelecionada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Validade" class="control-label"></label>
+                    <input asp-for="Validade" class="form-control" type="date" required />
+                <span asp-validation-for="Validade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cep" class="control-label"></label>
+                    <input asp-for="Cep" placeholder="Ex.: 11350-026" class="form-control" required />
+                <span asp-validation-for="Cep" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Endereço</label>
+                    <input asp-for="Endereco" class="form-control" required />
+                <span asp-validation-for="Endereco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bairro" class="control-label"></label>
+                    <input asp-for="Bairro" class="form-control" required />
+                <span asp-validation-for="Bairro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Número" class="control-label"></label>
+                    <input asp-for="Número" placeholder="Insira o número de sua residência" class="form-control" required />
+                <span asp-validation-for="Número" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Complemento" class="control-label"></label>
+                    <input asp-for="Complemento" class="form-control" />
+                <span asp-validation-for="Complemento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

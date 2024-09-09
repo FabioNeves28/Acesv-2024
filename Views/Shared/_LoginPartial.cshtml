@@ -1,0 +1,210 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Acesvv.Areas.Identity.Data
+@using Microsoft.Data.SqlClient;
+@using Microsoft.EntityFrameworkCore
+@inject SignInManager<UsuarioModel> SignInManager
+@inject UserManager<UsuarioModel> UserManager
+
+
+ 
+<style>
+    .dropbtn {
+        color: #000;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        background-color: #fff;
+    }
+
+
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+    .dropdown a:hover {
+        background-color: #ddd;
+        transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .navbar-nav {
+        padding-right: 15vh;
+    }
+</style>
+<script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+</head>
+
+
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        // Obtém o email do usuário logado
+        var userEmail = User.Identity.Name;
+
+        // Executa a consulta SQL para obter o valor do campo EditId
+        var editId = "";
+        using (var connection = new SqlConnection(@"Data Source=localhost\SQLEXPRESS; Initial Catalog=Dados;Integrated Security=True;"))
+        {
+            connection.Open();
+
+            // Consulta SQL para obter o CPF do usuário logado com base no email
+            var queryCpf = "SELECT Cpf FROM AspNetUsers WHERE UserName = @UserEmail";
+            string chaveADM = null;
+            using (var commandCpf = new SqlCommand(queryCpf, connection))
+            {
+                commandCpf.Parameters.AddWithValue("@UserEmail", userEmail);
+                var cpfResult = commandCpf.ExecuteScalar();
+                if (cpfResult != null)
+                {
+                    var userCpf = cpfResult.ToString();
+
+                    // Consulta SQL para obter o EditId com base no CPF do usuário logado
+                    var queryEditId = "SELECT Id FROM Dados WHERE Cpf = @UserCpf";
+                    using (var commandEditId = new SqlCommand(queryEditId, connection))
+                    {
+                        commandEditId.Parameters.AddWithValue("@UserCpf", userCpf);
+                        var editIdResult = commandEditId.ExecuteScalar();
+                        if (editIdResult != null)
+                        {
+                            editId = editIdResult.ToString();
+                        }
+                    }
+
+
+
+
+                    var queryChaveADM = "SELECT Chave_ADM FROM AspNetUsers WHERE Cpf = @UserCpf"; // Substitua "SuaTabelaDeUsuarios" pelo nome correto da tabela    
+                    using (var commandChaveADM = new SqlCommand(queryChaveADM, connection))
+                    {
+                        commandChaveADM.Parameters.AddWithValue("@UserCpf", userCpf);
+                        var chaveADMResult = commandChaveADM.ExecuteScalar();
+                        if (chaveADMResult != null)
+                        {
+                            chaveADM = chaveADMResult.ToString();
+                        }
+                    }
+                }
+
+            }
+            @if (chaveADM == "1")
+            
+                {
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3106/3106921.png" width="30" height="30"><button onclick="myFunction()" class="dropbtn">  Conta</button>
+                        <div id="myDropdown" class="dropdown-content">
+                        <a class="nav-link text-dark" asp-controller="Dados"  asp-action="" title="Relatório"><img src="https://cdn-icons-png.flaticon.com/512/4702/4702631.png" width="20" height="20">   Relatório de Transportadores</a>
+
+                            <a id="manage" class="nav-link text-dark" asp-controller="Dados" asp-action="Create" title="Preenchiento dos Dados"><img src="https://cdn-icons-png.flaticon.com/512/4838/4838646.png" width="20" height="20">   Preenchimento de dados</a>
+
+                            <a href="@Url.Action("Edit", "Dados", new { id = editId })" class="nav-link text-dark" title="Atualizar Dados">
+
+
+
+                                <img src="https://cdn-icons-png.flaticon.com/512/159/159612.png" width="20" height="20"> Atualizar dados
+                            </a>
+
+                            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Configurações"><img src="https://cdn-icons-png.flaticon.com/512/3524/3524752.png" width="20" height="20">   Configurações</a>
+                            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button id="logout" type="submit" class="nav-link btn btn-link text-dark"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" width="20" height="20"> Sair</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </li>
+            }
+            else{
+            <li class="nav-item">
+                    <div class="dropdown">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3106/3106921.png" width="30" height="30"><button onclick="myFunction()" class="dropbtn">  Conta</button>
+                        <div id="myDropdown" class="dropdown-content">
+
+
+                            <a id="manage" class="nav-link text-dark" asp-controller="Dados" asp-action="Create" title="Preenchiento dos Dados"><img src="https://cdn-icons-png.flaticon.com/512/4838/4838646.png" width="20" height="20">   Preenchimento de dados</a>
+
+                            <a href="@Url.Action("Edit", "Dados", new { id = editId })" class="nav-link text-dark" title="Atualizar Dados">
+
+
+
+                                <img src="https://cdn-icons-png.flaticon.com/512/159/159612.png" width="20" height="20"> Atualizar dados
+                            </a>
+
+                            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button id="logout" type="submit" class="nav-link btn btn-link text-dark"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" width="20" height="20"> Sair</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </li>
+                }
+        }
+    }
+    else
+    {
+
+        <li class="nav-item">
+            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Registrar</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
+    
+</ul>

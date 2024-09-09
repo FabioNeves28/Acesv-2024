@@ -1,0 +1,275 @@
+﻿    @model IEnumerable<Acesv.Models.Dados>
+    
+    @using System.Linq;
+    @using Microsoft.Data.SqlClient;
+    @{
+
+        ViewData["Title"] = "Index";
+    }
+    @{
+   
+        var QtdUsers = "";
+
+        // Executa a consulta SQL para obter o valor do campo EditId
+
+        using (var connection = new SqlConnection(@"Data Source=localhost\SQLEXPRESS; Initial Catalog=Dados;Integrated Security=True;"))
+        {
+            connection.Open();
+
+            // Consulta SQL para obter o CPF do usuário logado com base no email
+            var queryQtd = "SELECT COUNT(*) FROM Dados";
+            using (var commandQtd = new SqlCommand(queryQtd, connection))
+            {
+          
+                var qtdResult = commandQtd.ExecuteScalar();
+                if (qtdResult != null)
+                {
+                    QtdUsers = qtdResult.ToString();
+                }
+            }
+        }
+    }
+
+    <h1>Relatório dos Transportadores</h1>
+    <h5>Quantidade de transportadores registrados: @QtdUsers </h5>
+
+        <a href="@Url.Action("DownloadRelatorio", "Dados")">
+
+        <button type="button" class="btn btn-outline-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-pdf" viewBox="0 0 16 16">
+                <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"></path>
+                <path d="M4.603 12.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645 19.701 19.701 0 0 0 1.062-2.227 7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.187-.012.395-.047.614-.084.51-.27 1.134-.52 1.794a10.954 10.954 0 0 0 .98 1.686 5.753 5.753 0 0 1 1.334.05c.364.065.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.856.856 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.716 5.716 0 0 1-.911-.95 11.642 11.642 0 0 0-1.997.406 11.311 11.311 0 0 1-1.021 1.51c-.29.35-.608.655-.926.787a.793.793 0 0 1-.58.029zm1.379-1.901c-.166.076-.32.156-.459.238-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361.01.022.02.036.026.044a.27.27 0 0 0 .035-.012c.137-.056.355-.235.635-.572a8.18 8.18 0 0 0 .45-.606zm1.64-1.33a12.647 12.647 0 0 1 1.01-.193 11.666 11.666 0 0 1-.51-.858 20.741 20.741 0 0 1-.5 1.05zm2.446.45c.15.162.296.3.435.41.24.19.407.253.498.256a.107.107 0 0 0 .07-.015.307.307 0 0 0 .094-.125.436.436 0 0 0 .059-.2.095.095 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a3.881 3.881 0 0 0-.612-.053zM8.078 5.8a6.7 6.7 0 0 0 .2-.828c.031-.188.043-.343.038-.465a.613.613 0 0 0-.032-.198.517.517 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822.024.111.054.227.09.346z"></path>
+            </svg>
+            Relatório em PDF
+            </button>
+        </a>
+    
+    <p><br />
+        <a class="btn btn-primary"  asp-action="Create">Criar Novo Registro</a>
+    </p>
+    <style>
+        .table-container {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        table {
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        th, td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        }
+
+        th {
+        background-color: #f2f2f2;
+        }
+        .botoes{
+            margin-bottom: 5px
+        }
+
+        .botoes2 {
+            margin-bottom: 5px
+        }
+
+        .botoes3 {
+            margin-bottom: 5px
+        }
+ 
+
+    </style>
+    <script>
+        function searchTable() {
+            var input = document.getElementById("searchInput");
+            var filter = input.value.toLowerCase();
+            var table = document.getElementById("pesquisarTransportador");
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var clienteCell = rows[i].getElementsByTagName("td")[1];
+                if (clienteCell) {
+                    var cliente = clienteCell.textContent.toLowerCase();
+                    if (cliente.includes(filter)) {
+                        rows[i].style.display = "";
+                    }
+                    else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        function confirmDelete() {
+            return confirm("Tem certeza que deseja apagar o registro?");
+        }
+    </script>
+
+
+
+
+
+
+    <div>
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Pesquisar Transportador" class="form-control" style="width: 300px;">
+    </div>
+    <div class="table-container">
+        <table class="table" id="pesquisarTransportador">
+        <thead>
+            <tr>
+                <th>
+                    Nome Completo
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Apelido)
+                </th>
+                <th>
+                    CPF
+                </th>
+                <th>
+                    Data de Nascimento
+                </th>
+                 <th>
+                    @Html.DisplayNameFor(model => model.Telefone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prefixo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Bairros)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Veiculo)
+                </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Placa)
+                    </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ano)
+                </th>
+                <th>
+                    CNH
+                </th>
+                <th>
+                   Categoria
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Validade)
+                </th>
+                <th>
+                    Endereço
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Bairro)
+                </th>
+                <th>
+                   CEP
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Número)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Complemento)
+                </th>
+                <th>
+                   Escolas
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NomeCompleto)
+                        </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apelido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cpf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data_Nascimento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prefixo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bairros)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Veiculo)
+                </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Placa)
+                        </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ano)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cnh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoriaSelecionada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Validade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Endereco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bairro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cep)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Número)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Complemento)
+                </td>
+                    <td>
+                            @Html.DisplayFor(modelItem => item.EscolasSelecionadas)
+                    </td>
+
+                <td><div class="botoes">
+                            <a asp-action="Edit" asp-route-id="@item.Id" id="btn1"> 
+                    <button type="button" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+      <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"></path>
+    </svg>
+                    Editar
+
+                                    </button>
+                                </a> </div>
+                            <div class="botoes2">
+                            <a  asp-action="Details" asp-route-id="@item.Id" id="btn2"><button type="button" class="btn btn-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+      <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+    </svg>
+                    Detalhes
+                  </button></a> 
+                            </div>
+                                <div class="botoes3">
+                            <a asp-action="Delete" asp-route-id="@item.Id" id="btn3"><button type="button" class="btn btn-outline-danger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"></path>
+      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"></path>
+    </svg>
+                    Apagar
+                  </button></a>
+                            </div>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+    </div>

@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Acesvv.Models.Financeiro>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@Html.ActionLink("Baixar PDF", "DownloadPdf", "Financeiro", null, new { @class = "btn btn-primary" })
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<button id="btnDownload">Baixar Relatório</button>
+
+<table class="table" id="tabela">
+    <thead>
+        <tr>
+            <th>
+                Descrição
+            </th>
+            @foreach (var mes in new[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" })
+            {
+                <th>@mes</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var descricao in new[] { "Saldo Mês anterior", "Arrecadação Mensalidades Atrasadas", "Arrecadação Mensalidades Antecipadas","Total Entradas","Vencimento","Contabilidade","Tarifa Bancária","Apólice de Seguro","Advogada","Renovacao Assinatura","Taxas Bancárias","Total Gastos","Total Líquido" })
+        {
+            <tr>
+                <td>@descricao</td>
+                @foreach (var mes in new[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" })
+                {
+                    var financeiroMes = Model.FirstOrDefault(item => item.Mes == mes);
+                    <td>
+                        @if (financeiroMes != null)
+                        {
+                           
+                            var saldoMes = Convert.ToDouble(financeiroMes.Saldo_Mes);
+                            var menAtrasada = Convert.ToDouble(financeiroMes.Arrecadacao_Mensalidade_Atrasada);
+                            var menAntecipada = Convert.ToDouble(financeiroMes.Arrecadacao_Mensalidade_Antecipadas);
+                            double[] valores = new double[]
+                            {
+                Convert.ToDouble(financeiroMes.Vencimento),
+                Convert.ToDouble(financeiroMes.Contabilidade),
+                Convert.ToDouble(financeiroMes.Tarifa_Bancaria),
+                Convert.ToDouble(financeiroMes.Apolice_Seguro),
+                Convert.ToDouble(financeiroMes.Advogada),
+                Convert.ToDouble(financeiroMes.Renovacao_Assinatura),
+                Convert.ToDouble(financeiroMes.Taxas_Bancarias),
+                Convert.ToDouble(financeiroMes.Vencimento) // Note que você está convertendo o mesmo valor novamente aqui, corrija se necessário
+                            };
+
+                            double soma = 0;
+
+                            foreach (double valor in valores)
+                            {
+                                soma += valor;
+                            }
+
+
+                            double totalEntradas = saldoMes + menAtrasada + menAntecipada;
+                            @(descricao == "Saldo Mês anterior" ? financeiroMes.Saldo_Mes :
+                                descricao == "Arrecadação Mensalidades Atrasadas" ? financeiroMes.Arrecadacao_Mensalidade_Atrasada :
+                                descricao == "Arrecadação Mensalidades Antecipadas" ? financeiroMes.Arrecadacao_Mensalidade_Antecipadas :
+                                descricao == "Total Entradas" ? totalEntradas :
+                                descricao == "Vencimento" ? financeiroMes.Vencimento :
+                                descricao == "Contabilidade" ? financeiroMes.Contabilidade :
+                                descricao == "Tarifa Bancária" ? financeiroMes.Tarifa_Bancaria :
+                                descricao == "Apólice de Seguro" ? financeiroMes.Apolice_Seguro :
+                                descricao == "Advogada" ? financeiroMes.Advogada :
+                                descricao == "Renovacao Assinatura" ? financeiroMes.Renovacao_Assinatura :
+                                descricao == "Taxas Bancárias" ? financeiroMes.Taxas_Bancarias :
+                                descricao == "Taxa de Internet" ? financeiroMes.Taxa_Internet :
+                                descricao == "Total Gastos" ? soma:
+                                descricao == "Total Liquido" ? financeiroMes.Total_Liquido :
+
+                                "-")
+                        }
+                        else
+                        {
+                            @Html.Raw("&mdash;")
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="/js/site.js"></script>
