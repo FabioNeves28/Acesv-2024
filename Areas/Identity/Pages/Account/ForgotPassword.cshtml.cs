@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Mvc_ConfRec.Servicos;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Encodings.Web;
 
 namespace Acesvv.Areas.Identity.Pages.Account
 {
@@ -51,16 +52,19 @@ namespace Acesvv.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(Input.Email);
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var destinatario = await _userManager.FindByEmailAsync(Input.Email);
+                var destinatarioFormatado = destinatario.ToString();
+                var code = await _userManager.GeneratePasswordResetTokenAsync(destinatario);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Page(
                     "/Account/ResetPassword",
                     pageHandler: null,
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
+                var assunto = "Redefinir senha";
+                var msgCorpo = $"Por favor, redefina sua senha <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.";
 
-                await ServicoEmail.EnviaEmailAsync(Input.Email, "Resetar a Senha", "Resete a sua senha clicando <a href=\"" + callbackUrl + "\">AQUI</a>");
+                ServicoEmail.enviaEmail(destinatarioFormatado, assunto, msgCorpo, null, null, null, "");
                 return RedirectToPage("./ForgotPasswordConfirmation");
 
             }
