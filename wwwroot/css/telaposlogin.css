@@ -1,0 +1,101 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+h1, h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.documentos, .contrato, .pagamento {
+    margin-bottom: 30px;
+}
+
+.icones {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+    .icones img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .icones p {
+        margin-top: 5px;
+        text-align: center;
+        font-size: 14px;
+        color: #555;
+    }
+
+
+.mostrar-mais {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+    .mostrar-mais:hover {
+        text-decoration: underline;
+    }
+
+.pagamento ol {
+    margin: 15px 0;
+}
+
+.pagamento p, .pagamento ol {
+    font-size: 14px;
+    color: #555;
+}
+
+.pix-opcoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pix, .qr-code {
+    width: 45%;
+}
+
+    .pix h3, .qr-code h3 {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .qr-code img {
+        width: 150px;
+        height: 150px;
+        display: block;
+        margin: 0 auto;
+    }
+
+.contrato img {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
