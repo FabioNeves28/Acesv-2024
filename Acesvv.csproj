@@ -41,4 +41,8 @@
     <PackageReference Include="ViaCep" Version="4.1.135" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\src\" />
+  </ItemGroup>
+
 </Project>
