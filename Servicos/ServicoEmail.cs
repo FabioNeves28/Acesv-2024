@@ -6,7 +6,14 @@ namespace Mvc_ConfRec.Servicos
 {
     public class ServicoEmail
     {
-        public static bool enviaEmail(String emailPara, String assunto, String corpoMensagem, String emailCC = null, List<string> caminhoAnexos = null, byte[] anexoBinario = null, string nomeAnexoBinario = "")
+        private readonly IConfiguration _configuration;
+
+        public ServicoEmail(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public bool enviaEmail(String emailPara, String assunto, String corpoMensagem, String emailCC = null, List<string> caminhoAnexos = null, byte[] anexoBinario = null, string nomeAnexoBinario = "")
         {
             bool retorno = false;
 
@@ -18,7 +25,7 @@ namespace Mvc_ConfRec.Servicos
                 string smtpHost = "mail.acesv.com.br";
                 string smtpPorta = "465";
                 string userName = "contato@acesv.com.br";
-                string password = "68k-ADOc81jb";
+                string password = _configuration["HashPasswords:Key"];
                 string enableSSL = "true";
 
                 MailMessage eMail = new MailMessage();
