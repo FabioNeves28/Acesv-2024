@@ -1,0 +1,140 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.container-formulario {
+    padding: 5px;
+    display: flex;
+    box-shadow: 1px 5px 16px rgba(0, 0, 0);
+    height: 550px;
+    border-radius: 10px;
+    justify-content: space-between;
+}
+
+.form-image {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #6FC6FF;
+    border-radius: 5px;
+    width: 40%;
+}
+
+.form-image img {
+    width: 350px;
+    height: 322px;
+}
+
+.form {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 50%;
+    padding: 3rem;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-header h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.form-hearder2 {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-hearder2 h2 {
+    font-size: 24px;
+    margin-left: 10px;
+}
+
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 90px;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 20px;
+    margin-top: 0;
+    outline: none;
+    border-width: 0px;
+    border-bottom-width: 1px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 10px 10px 10px 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-box i {
+    position: absolute;
+    right: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #666;
+}
+
+.enter-bottons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-box input[type="text"],
+.input-box input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+}
+
+input[type="submit"] {
+    width: 100px;
+    height: 23px;
+    background-color: #6FC6FF;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #ddd;
+}
+
+.enter-bottons a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+.enter-bottons a:hover {
+        text-decoration: underline;
+}

@@ -8,11 +8,20 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\EmailSender.cs" />
+    <Compile Remove="Controllers\LoginScreenController.cs" />
+    <Compile Remove="Controllers\LoginsScreenController.cs" />
+    <Compile Remove="Controllers\TeladeLoginController.cs" />
     <Compile Remove="Models\AuthMessageSenderOptions.cs" />
+    <Compile Remove="Views\LoginScreen\LoginScreen.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\teladelogin.cs" />
     <Content Remove="wwwroot\js\method_pt.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Login\TelaDeLogin.html" />
   </ItemGroup>
 
   <ItemGroup>
