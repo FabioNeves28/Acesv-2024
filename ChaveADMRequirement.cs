@@ -6,8 +6,9 @@ public class ChaveADMRequirement
 
     public string Chama_ChaveADM(string userEmail)
     {
+        var dataSourceID = Environment.MachineName;
 
-        using (var connection = new SqlConnection(@"Data Source=localhost\SQLEXPRESS; Initial Catalog=Dados;Integrated Security=True;"))
+        using (var connection = new SqlConnection($"Data Source={dataSourceID}; Initial Catalog=Dados;Integrated Security=True;"))
         {
             connection.Open();
 
