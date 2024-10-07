@@ -19,11 +19,13 @@ namespace Acesvv.Areas.Identity.Pages.Account
     {
         private readonly UserManager<UsuarioModel> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly IConfiguration _configuration;
 
-        public ForgotPasswordModel(UserManager<UsuarioModel> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<UsuarioModel> userManager, IEmailSender emailSender, IConfiguration configuration)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -52,6 +54,7 @@ namespace Acesvv.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
+                ServicoEmail servicoEmail = new ServicoEmail(_configuration);
                 var destinatario = await _userManager.FindByEmailAsync(Input.Email);
                 var destinatarioFormatado = destinatario.ToString();
                 var code = await _userManager.GeneratePasswordResetTokenAsync(destinatario);
@@ -64,7 +67,7 @@ namespace Acesvv.Areas.Identity.Pages.Account
                 var assunto = "Redefinir senha";
                 var msgCorpo = $"Por favor, redefina sua senha <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.";
 
-                ServicoEmail.enviaEmail(destinatarioFormatado, assunto, msgCorpo, null, null, null, "");
+                servicoEmail.enviaEmail(destinatarioFormatado, assunto, msgCorpo, null, null, null, "");
                 return RedirectToPage("./ForgotPasswordConfirmation");
 
             }
