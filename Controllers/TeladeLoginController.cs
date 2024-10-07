@@ -4,14 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-public class LoginController : Controller
+public class TeladeLoginController : Controller
 {
     // Ação para exibir a página TelaPosLogin
-    public IActionResult TelaPosLogin()
-    {
-        return View();
-    }
-    public IActionResult TelaDeLogin()
+    public IActionResult TeladeLogin()
     {
         return View();
     }

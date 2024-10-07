@@ -8,11 +8,20 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\EmailSender.cs" />
+    <Compile Remove="Controllers\LoginScreenController.cs" />
+    <Compile Remove="Controllers\LoginsScreenController.cs" />
+    <Compile Remove="Controllers\TeladeLoginController.cs" />
     <Compile Remove="Models\AuthMessageSenderOptions.cs" />
+    <Compile Remove="Views\LoginScreen\LoginScreen.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\teladelogin.cs" />
     <Content Remove="wwwroot\js\method_pt.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Login\TelaDeLogin.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,10 +48,6 @@
     <PackageReference Include="Rotativa" Version="1.7.3" />
     <PackageReference Include="SendGrid" Version="9.28.1" />
     <PackageReference Include="ViaCep" Version="4.1.135" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\src\" />
   </ItemGroup>
 
 </Project>
