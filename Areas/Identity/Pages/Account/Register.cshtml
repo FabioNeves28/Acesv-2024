@@ -13,6 +13,16 @@
 
 
 <!-- Script para aplicar a máscara -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cadastro ACESV</title>
+        <!-- Link para Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="~/css/registro.css">
+        <script defer src="~/js/registro.js"></script>
+    </head>
+
 <script>
     function mascara(i, t) {
 
@@ -33,64 +43,90 @@
 
 
 <div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Criar nova conta.</h2>
-            <hr />
+    <body>
+        <style>
+            .navbar {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                z-index: 1000 !important;
+            }
 
-            <div class="form-floating">
-                <input asp-for="Input.Cpf" oninput="mascara(this, 'cpf')" id="cpfInput" class="form-control" autocomplete="new-password" aria-required="true" maxlength="11" />
-                <label asp-for="Input.Cpf"></label>
-                <span asp-validation-for="Input.Cpf" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                <label asp-for="Input.Email"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.Password"></label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.ConfirmPassword"></label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
+            body {
+                margin-top: 80px !important;
+            }
+        </style>
+        <script>
+            function mascara(i, t) {
+
+                var v = i.value;
+
+                if (isNaN(v[v.length - 1])) {
+                    i.value = v.substring(0, v.length - 1);
+                    return;
                 }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
+
+                if (t == "cpf") {
+                    i.setAttribute("maxlength", "14");
+                    if (v.length == 3 || v.length == 7) i.value += ".";
+                    if (v.length == 11) i.value += "-";
                 }
             }
-        </section>
-    </div>
+        </script>
+        <div class="wrapper">
+            <div class="form-wrapper">
+                <h2>CADASTRE-SE</h2>
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div class="field-group">
+                        <label for="email">
+                            <img src="https://img.icons8.com/material-outlined/24/000000/new-post.png" alt="E-mail Icon" />
+                        </label>
+                        <input asp-for="Input.Cpf" oninput="mascara(this, 'cpf')" id="cpfInput" class="form-control" autocomplete="new-password" aria-required="true" maxlength="11" placeholder="CPF" />
+                        <span asp-validation-for="Input.Cpf" class="text-danger"></span>
+                    </div>
+                    <div class="field-group">
+                        <label for="email">
+                            <img src="https://img.icons8.com/material-outlined/24/000000/new-post.png" alt="E-mail Icon" />
+                        </label>
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" id="email" placeholder="Email" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="field-group">
+                        <label for="senha">
+                            <img src="https://img.icons8.com/?size=24&id=82747&format=png&color=000000" alt="password Icon" />
+                        </label>
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" id="senha" placeholder="Senha" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        <span class="show-password" onclick="togglePassword('senha')">
+                            <i class="far fa-eye" id="eye-senha"></i>
+                        </span>
+                    </div>
+                    <div class="field-group">
+                        <label for="confirmar-senha">
+                            <img src="https://img.icons8.com/?size=24&id=82747&format=png&color=000000" alt="Password Icon" />
+                        </label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" id="confirmar-senha" placeholder="Confirme sua Senha" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        <span class="show-password" onclick="togglePassword('confirmar-senha')">
+                            <i class="far fa-eye" id="eye-confirmar-senha"></i>
+                        </span>
+                    </div>
+                    @*            <div class="field-group">
+                    <label for="telefone">
+                    <img src="https://img.icons8.com/?size=24&id=85928&format=png&color=000000" alt="Phone Icon" />
+                    </label>
+                    <input type="tel" id="telefone" placeholder="+55 (__) _____-____" required>
+                    </div> *@
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Cadastrar</button>
+                </form>
+                <p>Já tem uma conta? <a href="../Login/TelaDeLogin">Clique aqui</a> e faça login</p>
+            </div>
+            <div class="logo-wrapper">
+                <img src="~/src/logo.png" alt="Logo ACESV">
+            </div>
+        </div>
+    </body>
 </div>
 
 @section Scripts {
