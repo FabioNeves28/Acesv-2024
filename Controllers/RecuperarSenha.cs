@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-public class LoginController : Controller
-{
-    
-    public IActionResult TelaPosLogin()
+
+    public class RecuperarSenha : Controller
     {
-        return View();
-    }
-    public IActionResult TelaDeLogin()
+        public IActionResult TelaRecuperarSenha()
+        {
+            return View();
+        }
+    public IActionResult TelaNovaSenha()
     {
         return View();
     }
