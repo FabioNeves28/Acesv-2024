@@ -18,14 +18,14 @@ namespace Acesvv.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<UsuarioModel> _userManager;
-        private readonly IEmailSender _emailSender;
+        //private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
 
-        public ForgotPasswordModel(UserManager<UsuarioModel> userManager, IEmailSender emailSender, IConfiguration configuration)
+        public ForgotPasswordModel(UserManager<UsuarioModel> userManager)
         {
             _userManager = userManager;
-            _emailSender = emailSender;
-            _configuration = configuration;
+            //_emailSender = emailSender;
+            //_configuration = configuration;
         }
 
         /// <summary>
