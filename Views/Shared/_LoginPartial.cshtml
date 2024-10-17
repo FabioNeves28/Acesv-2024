@@ -100,7 +100,7 @@
 
         // Executa a consulta SQL para obter o valor do campo EditId
         var editId = "";
-        using (var connection = new SqlConnection($"Data Source={Environment.MachineName}; Initial Catalog=Dados;Integrated Security=True;"))
+        using (var connection = new SqlConnection("Data Source=LAB31M04\\SQLEXPRESS; Initial Catalog=Dados;Integrated Security=True;"))
         {
             connection.Open();
 

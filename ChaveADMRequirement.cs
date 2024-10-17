@@ -8,7 +8,7 @@ public class ChaveADMRequirement
     {
         var dataSourceID = Environment.MachineName;
 
-        using (var connection = new SqlConnection($"Data Source={dataSourceID}; Initial Catalog=Dados;Integrated Security=True;"))
+        using (var connection = new SqlConnection("Data Source=LAB31M04\\SQLEXPRESS; Initial Catalog=Dados;Integrated Security=True;"))
         {
             connection.Open();
 
