@@ -42,11 +42,10 @@
     <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Pesquisar Transportador" class="form-control" style="width: 300px;">
 </div>
 <div class="container">
-    
-    <form asp-action="DownloadRelatorio" method="get">
-        <button type="submit" id="gerarRelatorio">Relatório em PDF</button>
-    </form>
+    <a href="@Url.Action("DownloadRelatorio", "Dados")">
 
+        <button id="gerarRelatorio">Relatório em PDF</button>
+    </a>
 
     <p>
         <br />
