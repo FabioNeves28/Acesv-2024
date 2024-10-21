@@ -14,7 +14,7 @@ namespace Acesv2.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var teste = Environment.MachineName;
-            optionsBuilder.UseSqlServer(connectionString: "Data Source=localhost; Initial Catalog=Dados;Integrated Security=True;");
+            optionsBuilder.UseSqlServer(connectionString: $"Data Source={Environment.MachineName}; Initial Catalog=Dados;Integrated Security=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

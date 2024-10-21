@@ -14,7 +14,7 @@ body {
     padding: 5px;
     display: flex;
     box-shadow: 1px 5px 16px rgba(0, 0, 0);
-    height: 550px;
+    height: 500px;
     border-radius: 10px;
     justify-content: space-between;
 }
@@ -28,10 +28,10 @@ body {
     width: 40%;
 }
 
-    .form-image img {
-        width: 350px;
-        height: 322px;
-    }
+.form-image img {
+    width: 350px;
+    height: 322px;
+}
 
 .form {
     flex-direction: column;
@@ -47,36 +47,23 @@ body {
     margin-bottom: 20px;
 }
 
-    .form-header h3 {
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 16px;
-    }
-
-.form-header2 {
-    text-align: center;
-    margin-bottom: 20px;
-    width: 100%;
+.form-header h3 {
+     text-align: center;
+     margin-bottom: 20px;
+     font-size: 16px;
 }
-
-    .form-header2 h2 {
-        font-size: 24px;
-        margin-left: 10px;
-    }
 
 .input-group {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 90px;
 }
 
 .input-box {
     position: relative;
     margin-bottom: 20px;
     margin-top: 0;
-    border-width: 0px;
     border-bottom-width: 1px;
 }
 
@@ -85,50 +72,44 @@ body {
         padding: 8px;
         font-size: 16px;
         border: 1px solid #ccc;
-        border-radius: 10px;
+        border-radius: 12px;
         outline: none;
     }
 
-        /* Aqui está a regra para mudar a borda ao focar no input */
-        .input-box input:focus {
-            border-color: #6FC6FF; /* Muda a cor da borda para uma cor desejada */
-            box-shadow: none; /* Remove o brilho azulado padrão */
-        }
+.input-box i {
+     position: absolute;
+     right: 10px;
+     top: 50%;
+     transform: translateY(-50%);
+     font-size: 20px;
+     color: #666;
+}
 
-    .input-box i {
-        position: absolute;
-        right: 10px;
-        top: 40%;
-        transform: translateY(-50%);
-        font-size: 20px;
-        color: #666;
-    }
-
-.enter-buttons {
+.enter-bottons {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 20px;
 }
 
-.login-button {
-    width: 40%;
-    height: 25px;
+input[type="submit"] {
+    width: 100px;
+    height: 30px;
     background-color: #6FC6FF;
     color: #000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
 }
 
-    .login-button:hover {
-        background-color: #5BB0E4;
-    }
+input[type="submit"]:hover {
+    background-color: #ddd;
+}
 
-.text-center {
-    text-align: center;
-    margin: 5px 0;
+.enter-bottons a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+.enter-bottons a:hover {
+   text-decoration: underline;
 }

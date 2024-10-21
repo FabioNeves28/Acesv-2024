@@ -88,31 +88,28 @@
 
 </script>
 @{
-    // Obtém o email do usuário logado
-    var userEmail = User.Identity.Name;
+      var userEmail = User.Identity.Name;
 
-    // Variável para armazenar o CPF do usuário logado
-    var CpfUser = "";
+        var CpfUser = "";
 
-    // Executa a consulta SQL para obter o valor do campo EditId
 
-    using (var connection = new SqlConnection($"Data Source={Environment.MachineName}; Initial Catalog=Dados;Integrated Security=True;"))
-    {
-        connection.Open();
-
-        // Consulta SQL para obter o CPF do usuário logado com base no email
-        var queryCpf = "SELECT Cpf FROM AspNetUsers WHERE UserName = @UserEmail";
-        using (var commandCpf = new SqlCommand(queryCpf, connection))
+        using (var connection = new SqlConnection($"Data Source ={Environment.MachineName}; Initial Catalog = Dados; Integrated Security = True; "))
         {
-            commandCpf.Parameters.AddWithValue("@UserEmail", userEmail);
-            var cpfResult = commandCpf.ExecuteScalar();
-            if (cpfResult != null)
+            connection.Open();
+
+            var queryCpf = "SELECT Cpf FROM AspNetUsers WHERE UserName = @UserEmail";
+            using (var commandCpf = new SqlCommand(queryCpf, connection))
             {
-                CpfUser = cpfResult.ToString();
+                commandCpf.Parameters.AddWithValue("@UserEmail", userEmail);
+                var cpfResult = commandCpf.ExecuteScalar();
+                if (cpfResult != null)
+                {
+                    CpfUser = cpfResult.ToString();
+                }
             }
         }
-    }
-    
+
+
 }
 <script>
     function mascara(i, t) {
@@ -147,27 +144,20 @@
 }
 var inputElement = document.getElementById("numeroInput");
 
-// Adicione um ouvinte de evento de entrada para detectar quando algo é digitado
 inputElement.addEventListener("input", function () {
-    // Obtenha o valor atual do campo de entrada
     var valor = inputElement.value;
 
-    // Use uma expressão regular para remover caracteres não numéricos
     valor = valor.replace(/[^0-9]/g, '');
 
-    // Defina o valor atualizado de volta no campo de entrada
     inputElement.value = valor;
 });
  function formatPlaca(input) {
-      // Remove todos os caracteres que não são letras ou dígitos
       input.value = input.value.replace(/[^a-zA-Z0-9]/g, "");
 
-      // Adiciona o hífen na posição correta
       if (input.value.length > 3) {
         input.value = input.value.substring(0, 3) + "-" + input.value.substring(3);
       }
-      
-      // Limita o tamanho máximo da placa
+     
       if (input.value.length > 8) {
         input.value = input.value.substring(0, 8);
       }

@@ -1,0 +1,189 @@
+﻿@model IEnumerable<Acesv.Models.Dados>
+
+    @using System.Linq;
+    @using Microsoft.Data.SqlClient;
+@{
+
+    ViewData["Title"] = "Index";
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados</title>
+    <link rel="stylesheet" href="/css/TelaDados.css">
+</head>
+
+
+<script>
+    function searchTable() {
+        var input = document.getElementById("searchInput");
+        var filter = input.value.toLowerCase();
+        var table = document.getElementById("pesquisarTransportador");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var clienteCell = rows[i].getElementsByTagName("td")[1];
+            if (clienteCell) {
+                var cliente = clienteCell.textContent.toLowerCase();
+                if (cliente.includes(filter)) {
+                    rows[i].style.display = "";
+                }
+                else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function confirmDelete() {
+        return confirm("Tem certeza que deseja apagar o registro?");
+    }
+</script>
+<div>
+    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Pesquisar Transportador" class="form-control" style="width: 300px;">
+</div>
+<div class="container">
+    <a href="@Url.Action("DownloadRelatorio", "Dados")">
+
+        <button id="gerarRelatorio">Relatório em PDF</button>
+    </a>
+
+    <p>
+        <br />
+        <a class="btn btn-primary" id="novoRegistro" asp-action="Create">Criar Novo Registro</a>
+    </p>
+    <h1>Relatório dos Transportadores</h1>
+    <p>Quantidade de transportadores registrados: <span id="totalTransportadores">0</span></p>
+    <table class="table" id="pesquisarTransportador">
+        <thead>
+            <tr>
+                <th>
+                    Nome Completo
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Apelido)
+                </th>
+                <th>
+                    CPF
+                </th>
+                <th>
+                    Data de Nascimento
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Telefone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prefixo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Bairros)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Veiculo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Placa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ano)
+                </th>
+                <th>
+                    CNH
+                </th>
+                <th>
+                    Categoria
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Validade)
+                </th>
+                <th>
+                    Endereço
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Bairro)
+                </th>
+                <th>
+                    CEP
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Número)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Complemento)
+                </th>
+                <th>
+                    Escolas
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tabelaTransportadores">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeCompleto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Apelido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cpf)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data_Nascimento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefone)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prefixo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bairros)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Veiculo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Placa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ano)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cnh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoriaSelecionada)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Validade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Endereco)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bairro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cep)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Número)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Complemento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EscolasSelecionadas)
+                    </td>
+
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

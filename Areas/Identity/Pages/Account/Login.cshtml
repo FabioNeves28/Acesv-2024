@@ -1,171 +1,87 @@
 ﻿@page
 @model LoginModel
-@{
-    ViewData["Title"] = "Login";
-}
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login ACESV</title>
-    <!-- Link para Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="~/css/login.css">
-    <script defer src="~/js/login.js"></script>
-</head>
-<body>
-    <style>
-        .footer[b-k9tty6e7ao] {
-            position: fixed;
-            bottom: auto;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-/*         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-        } */
-
-        .container {
-            display: flex;
-            justify-content: space-between;
-            width: 100vw;
-            height: 80vh;
-            background-color: #fff;
-        }
-
-        .form-container {
-            width: 50%;
-            padding: 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-color: #fff;
-        }
-
-            .form-container h2 {
-                font-size: 28px;
-                margin-bottom: 20px;
-            }
-
-        .field-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-            .field-group label {
-                display: block;
-                margin-bottom: 5px;
-            }
-
-            .field-group input {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                font-size: 16px;
-            }
-
-        .show-password {
-            position: absolute;
-            right: 10px;
-            top: 38px;
-            cursor: pointer;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #87CEFA;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-            button:hover {
-                background-color: #00BFFF;
-            }
-
-        .links {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-            .links a {
-                color: #00BFFF;
-                text-decoration: none;
-                margin-top: 10px;
-            }
 
                 .links a:hover {
                     text-decoration: underline;
                 }
 
-        .logo-container {
-            width: 50%;
-            background-color: #6fc6ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-            .logo-container img {
-                max-width: 80%;
-                border-radius: 50%;
-            }
-
-    </style>
-    <div class="container">
-        <div class="form-container">
-            <h2>LOGIN</h2>
-            <form id="loginForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                <div class="field-group">
-                    <label for="email">
-                        <img src="https://img.icons8.com/material-outlined/24/000000/new-post.png" alt="E-mail Icon" />
-                    </label>
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" id="email" placeholder="Email" />
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+                <h2>Use a local account to log in.</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-floating">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                    <label asp-for="Input.Email" class="form-label"></label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <div class="field-group">
-                    <label for="senha">
-                        <img src="https://img.icons8.com/?size=24&id=82747&format=png&color=000000" alt="Password Icon" />
-                    </label>
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" id="senha" placeholder="Senha" />
+                <div class="form-floating">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                    <label asp-for="Input.Password" class="form-label"></label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    <span class="show-password" onclick="togglePassword('senha')">
-                        <i class="far fa-eye" id="eye-senha"></i>
-                    </span>
                 </div>
-                <button id="loginSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Entrar</button>
+                <div>
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe" class="form-label">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                </div>
+                <div>
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                    </p>
+                    <p>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                    </p>
+                </div>
             </form>
-            <div class="links">
-                <p><a href="#">Esqueceu sua senha?</a></p>
-                <p><a href="#">Esqueceu nome de usuário?</a></p>
-                <p>Não tem uma conta? <a href="../Cadastro/Registro">Criar conta</a></p>
-            </div>
-        </div>
-        <div class="logo-container">
-            <img src="~/src/logo.png" alt="Logo ACESV">
-        </div>
+        </section>
     </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h3>Use another service to log in.</h3>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                            about setting up this ASP.NET application to support logging in via external services</a>.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins!)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+</div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
 </body>
 </html>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
