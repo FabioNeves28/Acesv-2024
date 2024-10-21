@@ -48,10 +48,9 @@ body {
 }
 
 .form-header h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 16px;
-}
+     margin-bottom: 20px;
+     font-size: 16px;
+ }
 
 .input-group {
     display: flex;
@@ -64,8 +63,8 @@ body {
     position: relative;
     margin-bottom: 20px;
     margin-top: 0;
-    border-bottom-width: 1px;
     border-width: 0px;
+    border-bottom-width: 1px;
 }
 
 .input-box input {
@@ -77,6 +76,12 @@ body {
     outline: none;
 }
 
+       
+.input-box input:focus {
+    border-color: #6FC6FF; 
+    box-shadow: none;
+}
+
 .input-box i {
     position: absolute;
     right: 10px;
@@ -84,7 +89,6 @@ body {
     transform: translateY(-50%);
     font-size: 20px;
     color: #666;
-
 }
 
 .enter-bottons {
@@ -94,24 +98,26 @@ body {
 }
 
 input[type="submit"] {
-    width: 100px;
-    height: 30px;
+    width: 13%;
+    height: 25px;
     background-color: #6FC6FF;
     color: #000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
-input[type="submit"]:hover {
-    background-color: #ddd;
-}
+    input[type="submit"]:hover {
+        background-color: #5BB0E4;
+    }
 
 .enter-bottons a {
     color: #337ab7;
     text-decoration: none;
 }
 
-.enter-bottons a:hover {
+    .enter-bottons a:hover {
         text-decoration: underline;
-}
+    }
