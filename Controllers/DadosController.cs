@@ -139,25 +139,25 @@ namespace Acesvv.Controllers
         // GET: Dados/Index
         public async Task<IActionResult> Index()
         {
-            //ChaveADMRequirement chaveAdm = new ChaveADMRequirement();
-            //if (!User.Identity.IsAuthenticated)
-            //{
-            //    // Se não estiver autenticado, redireciona para uma tela de erro ou retorna uma resposta personalizada
-            //    string returnUrl = "/Identity/Account/AccessDeniedLogin";
+            ChaveADMRequirement chaveAdm = new ChaveADMRequirement();
+            if (!User.Identity.IsAuthenticated)
+            {
+                // Se não estiver autenticado, redireciona para uma tela de erro ou retorna uma resposta personalizada
+                string returnUrl = "/Identity/Account/AccessDeniedLogin";
 
-            //    // Redirect to the constructed URL
-            //    return Redirect(returnUrl); // Substitua "Error" pelo nome da sua view de erro
-            //}
-            //var userEmail = User.Identity.Name;
-            //// Chame o método com o email do usuário como argumento
-            //string chaveADM = chaveAdm.Chama_ChaveADM(userEmail);
-            //if (chaveADM != "1")
-            //{
-            //    string returnUrl = "/Identity/Account/AccessDenied?ReturnUrl=%2FDados";
+                // Redirect to the constructed URL
+                return Redirect(returnUrl); // Substitua "Error" pelo nome da sua view de erro
+            }
+            var userEmail = User.Identity.Name;
+            // Chame o método com o email do usuário como argumento
+            string chaveADM = chaveAdm.Chama_ChaveADM(userEmail);
+            if (chaveADM != "1")
+            {
+                string returnUrl = "/Identity/Account/AccessDenied?ReturnUrl=%2FDados";
 
-            //    // Redirect to the constructed URL
-            //    return Redirect(returnUrl);
-            //}
+                // Redirect to the constructed URL
+                return Redirect(returnUrl);
+            }
 
             var dados = await _context.Dados.Include(d => d.Escola).ToListAsync();
 

@@ -175,8 +175,6 @@
         cursor: pointer;
     }
 
-    /* Add more custom styles as needed */
-
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -193,7 +191,6 @@
                         $('#Bairro').val(data.bairro);
                     },
                     error: function () {
-                        // Tratar erro, se necessário
                     }
                 });
             }
@@ -235,7 +232,6 @@
     {
         connection.Open();
 
-        // Consulta SQL para obter o valor de Chave_ADM do usuário logado na tabela AspNetUsers
         var queryChave = "SELECT Chave_ADM FROM AspNetUsers WHERE UserName = @UserEmail";
         using (var commandChave = new SqlCommand(queryChave, connection))
         {
@@ -246,7 +242,6 @@
             {
                 Chave_ADM = chaveInt;
 
-                // Consulta SQL para obter o campo Id na tabela Dados com base no valor de Chave_ADM
                 var queryId = "SELECT Id FROM AspNetUsers WHERE Chave_ADM = @Chave_ADM";
                 using (var commandId = new SqlCommand(queryId, connection))
                 {
