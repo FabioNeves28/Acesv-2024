@@ -4,6 +4,9 @@
     box-sizing: border-box;
     font-family: 'Arial', sans-serif;
 }
+.w-100 {
+    width: 192px !important;
+}
 .row > * {
     max-width: 100vw;
     padding: 0;
@@ -38,6 +41,7 @@ body {
     margin-top: 60px;
     flex: 1;
     padding: 20px;
+    padding-top: 14vh;
 }
 
 .logo-wrapper {
