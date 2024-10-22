@@ -4,17 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h2 class="titulo-condutores">Condutores Disponíveis</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 @if (ViewBag.Transportadores.Count > 0)
 {
     <table class="table">
         <tr>
-            <th>Apelido</th>
-            <th>Prefixo</th>
+            <th>Apelido do transportador</th>
+            <th>Telefone</th>
             <th>Bairros</th>
         </tr>
         @foreach (var transportador in Model)
@@ -31,3 +28,43 @@ else
 {
     <p>Nenhum transportador encontrado para essa escola.</p>
 }
+<html>
+    <style>
+        .table {
+            width: 100%;
+            table-layout: fixed; 
+            border-collapse: collapse; 
+        }
+
+       
+        .table th {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #ccc; 
+            border-top: 1px solid #ccc;    
+            word-wrap: break-word; 
+            background-color: #f8f9fa; 
+        }
+
+   
+        .table td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #ddd; 
+            word-wrap: break-word; 
+        }
+
+       
+        .table tr:nth-child(even) {
+            background-color: rgba(0, 123, 255, 0.32); 
+        }
+
+  
+        .titulo-condutores {
+            font-size: 24px;
+            color: #333;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+    </style>
+</html>
