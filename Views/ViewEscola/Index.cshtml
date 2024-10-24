@@ -4,30 +4,173 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+    }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-@if (ViewBag.Transportadores.Count > 0)
-{
-    <table class="table">
-        <tr>
-            <th>Apelido</th>
-            <th>Prefixo</th>
-            <th>Bairros</th>
-        </tr>
-        @foreach (var transportador in Model)
-        {
-            <tr>
-                <td>@transportador.Apelido</td>
-                <td>@transportador.Prefixo</td>
-                <td>@transportador.Bairros</td>
-            </tr>
+    .container {
+        margin: 20px auto;
+        
+    }
+
+    h1 {
+        text-align: left;
+        color: #000;
+    }
+
+    .search-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
         }
-    </table>
-}
-else
-{
-    <p>Nenhum transportador encontrado para essa escola.</p>
-}
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #a3a3a3;
+    }
+
+    th {
+        background-color: #f5f5f5;
+    }
+
+    tr:nth-child(even) {
+        background-color: #e0f1ff;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    tr:hover {
+        background-color: #cce7ff;
+    }
+
+    .pagination {
+        margin: 10px 0;
+        text-align: right;
+    }
+
+        .pagination span {
+            font-size: 14px;
+            color: #666;
+        }
+
+    .selected-school {
+        font-weight: bold;
+    }
+
+    .pagination-controls a {
+        margin: 0 5px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+        .pagination-controls a.disabled {
+            background-color: #ccc;
+            pointer-events: none;
+        }
+</style>
+
+<div class="container">
+    <h1>Transportadores Disponíveis</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Pesquisar">
+        <span class="selected-school">Escola selecionada: <b>@ViewBag.EscolaSelecionada</b></span>
+    </div>
+
+    @if (ViewBag.Transportadores.Count > 0)
+    {
+        <table id="transportadoresTable">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Prefixo</th>
+                    <th>Bairros</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var transportador in Model)
+                {
+                    <tr>
+                        <td>@transportador.Apelido</td>
+                        <td>@transportador.Prefixo</td>
+                        <td>@transportador.Bairros</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="pagination">
+            <span>Resultados: @ViewBag.Resultados</span><br />
+            <span>Página: @ViewBag.PaginaAtual de @ViewBag.TotalPaginas</span>
+        </div>
+
+        <div class="pagination-controls">
+            @if (ViewBag.PaginaAtual > 1)
+            {
+                <a href="?nomeEscolaEscolhida=@ViewBag.EscolaSelecionada&pagina=@(ViewBag.PaginaAtual - 1)">Anterior</a>
+            }
+            else
+            {
+                <a class="disabled">Anterior</a>
+            }
+
+            @if (ViewBag.PaginaAtual < ViewBag.TotalPaginas)
+            {
+                <a href="?nomeEscolaEscolhida=@ViewBag.EscolaSelecionada&pagina=@(ViewBag.PaginaAtual + 1)">Próxima</a>
+            }
+            else
+            {
+                <a class="disabled">Próxima</a>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Nenhum transportador encontrado para essa escola.</p>
+    }
+</div>
+
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        table = document.getElementById('transportadoresTable');
+        tr = table.getElementsByTagName('tr');
+
+        for (i = 1; i < tr.length; i++) {
+            tr[i].style.display = "none";
+            td = tr[i].getElementsByTagName('td');
+            for (j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    }
+                }
+            }
+        }
+    });
+</script>
