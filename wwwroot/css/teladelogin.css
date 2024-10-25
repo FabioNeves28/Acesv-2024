@@ -93,10 +93,10 @@
         outline: none;
     }
 
-        /* Aqui está a regra para mudar a borda ao focar no input */
+
         .input-box input:focus {
-            border-color: #6FC6FF; /* Muda a cor da borda para uma cor desejada */
-            box-shadow: none; /* Remove o brilho azulado padrão */
+            border-color: #6FC6FF;
+            box-shadow: none;
         }
 
     .input-box i {

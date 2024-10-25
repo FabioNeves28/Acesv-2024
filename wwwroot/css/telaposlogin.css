@@ -7,16 +7,12 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    padding: 20px;
 }
 
 .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 !important;
+    padding: 25px !important;
+    max-width: 100%;
 }
 
 .documentos, .contrato, .pagamento {
