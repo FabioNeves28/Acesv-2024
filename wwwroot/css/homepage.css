@@ -115,7 +115,8 @@ section.hero {
     align-items: center;
     padding: 40px 20px;
     background-color: #addeff;
-    height: 85vh;
+    height: 110vh;
+    overflow: hidden;
 }
 
     .info-section img {
@@ -254,3 +255,52 @@ footer {
 li {
     padding: 10px;
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.transporte-clandestino {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 71px;
+    padding-left: 91px;
+    overflow: hidden;
+}
+
+.content {
+    max-width: 600px;
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.highlight {
+    color: #000;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+ul {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+    ul li {
+        margin-bottom: 10px;
+    }
+
+.image-container {
+    max-width: 450px;
+}
+
+    .image-container img {
+        width: 100%;
+    }
