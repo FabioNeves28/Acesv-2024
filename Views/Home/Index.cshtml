@@ -1,250 +1,308 @@
-﻿﻿@{
-    ViewData["Title"] = "Bem-vindo a ACESV!";
-}
-
-<!DOCTYPE html>
-<html style="font-size: 16px;" lang="pt">
-
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <title>Registrar</title>
-    <link rel="stylesheet" href="./css/nicepage.css" media="screen">
-    <link rel="stylesheet" href="./css/index.css" media="screen">
-    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
-    <script>
-        function redirecionarParaEscola(selectElement) {
-            var nomeEscolaEscolhida = selectElement.value;
-            if (nomeEscolaEscolhida !== "") {
-                window.location.href = `/ViewEscola/Index?nomeEscolaEscolhida=${encodeURIComponent(nomeEscolaEscolhida)}`;
+    <title>Transportador Escolar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9fafb;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+            .menu-icon div {
+                width: 32px;
+                height: 4px;
+                background-color: #333;
+                margin: 5px 0;
             }
+
+        /* Hero Section */
+        section.hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 20px;
+            background-color: white;
+            position: relative;
+            overflow: hidden;
         }
-        var div = document.querySelector('.container');
-        if (div) {
-            div.className = '';
+
+        .hero-content {
+            text-align: left;
+            max-width: 40%;
         }
-    </script>
+
+            .hero-content h1 {
+                font-size: 2.5em;
+                font-weight: bold;
+                margin: 0 0 10px;
+            }
+
+            .hero-content p {
+                color: #555;
+                margin-bottom: 20px;
+            }
+
+        .select-box {
+            position: relative;
+            max-width: 300px;
+        }
+
+            .select-box select {
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                appearance: none;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                background: white;
+                cursor: pointer;
+            }
+
+            .select-box:after {
+                content: '\25BC';
+                position: absolute;
+                top: 50%;
+                right: 15px;
+                transform: translateY(-50%);
+                pointer-events: none;
+                font-size: 16px;
+                color: #777;
+            }
+
+        .hero-image {
+            position: relative;
+            width: 50%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+            .hero-image img {
+                max-width: 100%;
+                height: auto;
+                z-index: 1;
+            }
+
+            .hero-image .circle {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                width: 600px;
+                height: 600px;
+                background: linear-gradient(180deg, rgba(0, 153, 255), rgba(0, 0, 255, 0));
+                border-radius: 50%;
+                transform: translate(50%, -50%);
+                z-index: 0;
+                pointer-events: none;
+            }
+
+        /* Information Section */
+        .info-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 20px;
+            background-color: #E6F0FB;
+        }
+
+            .info-section img {
+                width: 45%;
+                max-width: 600px;
+                border-radius: 8px;
+                margin-right: 20px;
+            }
+
+        .info-text {
+            flex: 1;
+            text-align: left;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        /* Diretores Section */
+        .diretores-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+            .diretores-section h2 {
+                font-size: 2em;
+                font-weight: bold;
+                margin-bottom: 30px;
+            }
+
+        .diretores {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .diretor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+            .diretor img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                background-color: #E6F0FB;
+            }
+
+            .diretor p {
+                margin-top: 10px;
+                font-size: 1em;
+                font-weight: 500;
+            }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 40px 20px;
+            background-color: #E6F0FB;
+        }
+
+            .faq-section h2 {
+                font-size: 2em;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+        .faq {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 10px;
+            background-color: #D1E4FF;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+        }
+
+            .faq-item:hover {
+                background-color: #AFCFFF;
+            }
+
+            .faq-item h3 {
+                font-size: 1.2em;
+                font-weight: 500;
+            }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-    <section class="u-clearfix u-custom-color-1 u-valign-middle-xs u-section-1" id="sec-25ad">
-        <div class="u-clearfix u-expanded-width-xs u-layout-wrap u-layout-wrap-1">
-            <h1 class="u-align-left u-custom-font u-font-montserrat u-text u-text-body-alt-color u-text-1"
-                data-animation-name="customAnimationIn" data-animation-duration="1000">
-                Encontre
-                aqui<br>seu transportador<span class="u-icon"><br></span>
-            </h1>
-            <img class="u-hidden-xs u-image u-image-circle u-image-contain u-image-1" src="./images/logo_atualizado.png"
-                 alt="" data-image-width="1128" data-image-height="995">
-            <h1 class="u-align-left u-custom-font u-font-montserrat u-text u-text-body-alt-color u-text-2"
-                data-animation-name="customAnimationIn" data-animation-duration="1000">
-                <span style="font-size: 1.125rem;">
-                    <span style="font-style: italic; font-size: 1.5rem;">
-                        Obs.: Caso não encontre a
-                        escola des
-                    </span>
-                    <span style="font-size: 1.5rem;">
-                        ejada<br>selecione a escola mais próxima
-                    </span>
-                </span>
-                <br>
-                <br>
-                <span style="font-size: 1.5rem;">Lista com todas as escolas disponíveis:</span>
-                <br>
-            </h1>
-            <div class="u-expanded-width-xs u-list u-list-1">
-                <div class="u-repeater u-repeater-1">
-                    <select class="form-control" id="escolaSelect" name="nomeEscolaEscolhida"
-                            onchange="redirecionarParaEscola(this)">
-                        <option value="">Selecione uma escola</option>
-                        @foreach (var escola in ViewBag.Escolas)
-                        {
-                            <option value="@escola.Text">@escola.Text</option>
-                        }
-                    </select>
-                </div>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="menu-icon">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <img src="https://via.placeholder.com/50" alt="Logo" class="logo">
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Encontre aqui seu transportador</h1>
+            <p>Lista com todas escolas disponíveis:</p>
+            <div class="select-box">
+                <select>
+                    <option>Escolas...</option>
+                </select>
             </div>
-
-
-
+        </div>
+        <div class="hero-image">
+            <div class="circle"></div>
+            <img src="https://via.placeholder.com/600x300" alt="Ônibus escolar">
         </div>
     </section>
-    <section class="u-clearfix u-image u-section-2" id="sec-f0a5" data-image-width="819" data-image-height="548">
-        <div class="u-clearfix u-expanded-width-xs u-layout-wrap u-layout-wrap-1">
-            <div class="u-layout">
-                <div class="u-layout-row">
-                    <div class="u-align-left-lg u-align-left-md u-align-left-sm u-align-left-xl u-container-style u-layout-cell u-shape-rectangle u-size-60 u-layout-cell-1">
-                        <div class="u-container-layout u-container-layout-1">
-                            <h2 class="u-align-left u-custom-font u-font-montserrat u-text u-text-white u-text-1"
-                                data-animation-name="customAnimationIn" data-animation-duration="1000">
-                                Conheça
-                                nosso<br>trabalho
-                            </h2>
-                            <p class="u-align-justify-xs u-align-left-lg u-align-left-md u-align-left-sm u-align-left-xl u-custom-font u-font-montserrat u-text u-text-grey-5 u-text-2"
-                               data-animation-name="customAnimationIn" data-animation-duration="1000">
-                                O transporte
-                                escolar é um serviço prestado por profissionais qualificados. De acordo com as
-                                determinações do Contran, o condutor deve ter mais de 21 anos, ser habilitado na
-                                categoria "D" e concluir o curso gerido pelo Detran, que é específico para o transporte
-                                escolar.<br>
-                                <br>Portanto, todos os transportadores mencionados estão qualificados para prestar um
-                                serviço de qualidade. Lembre-se:<span style="font-style: italic;">
-                                    "Prefira
-                                    transportadores legalizados. Não se deixe seduzir por preços baixos, pois o barato
-                                    pode sair caro".
-                                </span>
-                                <br>
-                            </p>
-                            <div class="u-list u-list-1">
-                                <div class="u-repeater u-repeater-1"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+    <!-- Information Section -->
+    <section class="info-section">
+        <img src="https://via.placeholder.com/600x300" alt="Crianças embarcando no ônibus">
+        <div class="info-text">
+            <h2>Deseja contratar transporte escolar para seu filho?</h2>
+            <p>Atuamos em todas as regiões de São Vicente, oferecendo nossos serviços com profissionais selecionados.</p>
+        </div>
+    </section>
+
+    <!-- Diretores Section -->
+    <section class="diretores-section">
+        <h2>DIRETORES</h2>
+        <div class="diretores">
+            <div class="diretor">
+                <img src="https://via.placeholder.com/100" alt="Diego">
+                <p>Diego</p>
+            </div>
+            <div class="diretor">
+                <img src="https://via.placeholder.com/100" alt="Alex">
+                <p>Alex</p>
+            </div>
+            <div class="diretor">
+                <img src="https://via.placeholder.com/100" alt="Daniela">
+                <p>Daniela</p>
             </div>
         </div>
     </section>
-    <section class="u-align-left u-border-1 u-border-grey-75 u-clearfix u-custom-color-1 u-valign-middle-xs u-section-3"
-             id="carousel_d518">
-        <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
-            <div class="u-gutter-0 u-layout">
-                <div class="u-layout-row">
-                    <div class="u-align-left-lg u-align-left-md u-align-left-sm u-align-left-xl u-container-align-left-lg u-container-align-left-md u-container-align-left-sm u-container-align-left-xl u-container-style u-layout-cell u-left-cell u-shape-rectangle u-size-60 u-layout-cell-1">
-                        <div class="u-container-layout u-valign-bottom-xs u-container-layout-1">
-                            <h2 class="u-align-left u-custom-font u-font-montserrat u-text u-text-body-alt-color u-text-1"
-                                data-animation-name="customAnimationIn" data-animation-duration="1000">
-                                O que é a ACESV?
-                            </h2>
-                            <p class="u-align-justify-xs u-align-left-lg u-align-left-md u-align-left-sm u-align-left-xl u-custom-font u-font-montserrat u-text u-text-black u-text-2"
-                               data-animation-name="customAnimationIn" data-animation-duration="1000">
-                                A ACESV foi
-                                criada a partir de um desejo de nossa categoria, era chegada a hora de mudar o conceito
-                                de individualismo e unir força, dividir ideias e se fortalecer junto aos órgãos
-                                públicos.<br>
-                                <br>Estamos a cada dia em busca da excelência em nossa prestação de serviço e procurando
-                                atender a todos os cantos da cidade, pois sabemos a importância e necessidade de quem
-                                nos procura.
-                            </p>
-                            <img class="u-image u-image-contain u-image-default u-image-1"
-                                 src="./images/images-removebg-preview.png" alt="" data-image-width="450"
-                                 data-image-height="239" data-animation-name="customAnimationIn"
-                                 data-animation-duration="2000">
-                        </div>
-                    </div>
-                </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2>Perguntas Frequentes</h2>
+        <div class="faq">
+            <div class="faq-item">
+                <h3>O que é ACESV?</h3>
+            </div>
+            <div class="faq-item">
+                <h3>Como selecionamos nossos profissionais?</h3>
+            </div>
+            <div class="faq-item">
+                <h3>Quais os perigos acerca do transporte clandestino?</h3>
+            </div>
+            <div class="faq-item">
+                <h3>Sou condutor, como posso me juntar à ACESV?</h3>
             </div>
         </div>
     </section>
-    <section class="u-align-center u-clearfix u-grey-5 u-section-4" id="carousel_e658">
-        <div class="u-clearfix u-sheet u-sheet-1">
-            <h2 class="u-text u-text-default u-text-1">Diretores</h2>
-            <p class="u-text u-text-2">
-                Cofira abaixo os diretores da nossa<br>associação:
-            </p>
-            <div class="u-expanded-width u-layout-grid u-list u-list-1">
-                <div class="u-repeater u-repeater-1">
-                    <div class="u-container-style u-hover-feature u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-1"
-                         data-animation-name="customAnimationIn" data-animation-duration="1000">
-                        <div class="u-container-layout u-similar-container u-container-layout-1">
-                            <div alt="" class="u-border-7 u-border-palette-4-base u-image u-image-circle u-image-1"
-                                 data-image-width="150" data-image-height="150"></div>
-                            <div class="u-container-style u-group u-shape-rectangle u-group-1">
-                                <div class="u-container-layout u-container-layout-2">
-                                    <span class="u-file-icon u-icon u-opacity u-opacity-20 u-icon-1">
-                                        <img src="./images/115893.png" alt="">
-                                    </span>
-                                    <h5 class="u-align-left u-text u-text-3">Alexandre</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="u-container-style u-hover-feature u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-2"
-                         data-animation-name="customAnimationIn" data-animation-duration="1000">
-                        <div class="u-container-layout u-similar-container u-container-layout-3">
-                            <div alt="" class="u-border-7 u-border-palette-4-base u-image u-image-circle u-image-2"
-                                 data-image-width="126" data-image-height="126"></div>
-                            <div class="u-container-style u-group u-shape-rectangle u-group-2">
-                                <div class="u-container-layout u-container-layout-4">
-                                    <span class="u-file-icon u-icon u-opacity u-opacity-20 u-icon-2">
-                                        <img src="./images/115893.png" alt="">
-                                    </span>
-                                    <h5 class="u-align-left u-text u-text-4">Daniela</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="u-container-style u-hover-feature u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-3"
-                         data-animation-name="customAnimationIn" data-animation-duration="1000">
-                        <div class="u-container-layout u-similar-container u-container-layout-5">
-                            <div alt="" class="u-border-7 u-border-palette-4-base u-image u-image-circle u-image-3"
-                                 data-image-width="720" data-image-height="1080"></div>
-                            <div class="u-container-style u-group u-shape-rectangle u-group-3">
-                                <div class="u-container-layout u-container-layout-6">
-                                    <span class="u-file-icon u-icon u-opacity u-opacity-20 u-icon-3">
-                                        <img src="./images/115893.png" alt="">
-                                    </span>
-                                    <h5 class="u-align-left u-text u-text-5">Rafael</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+    <!-- Footer -->
+    <footer>
+        © 2024 - ACESV <br>
+        RUA XXX, Parque YYY - CEP 00000-002 - São Paulo - Brasil
+    </footer>
 
-
-    </section>
-    <section class="u-align-center u-clearfix u-custom-color-1 u-section-5" id="carousel_d2df">
-        <div class="u-clearfix u-sheet u-sheet-1">
-            <div class="u-list u-list-1">
-                <div class="u-repeater u-repeater-1"></div>
-            </div>
-            <h2 class="u-align-left u-text u-text-default u-text-1" data-animation-name="customAnimationIn"
-                data-animation-duration="1000">
-                Diga <span style="font-weight: 700;">NÃO</span> ao&nbsp;<br>transporte
-                clandestino
-            </h2>
-            <img class="u-hidden-md u-image u-image-contain u-image-default u-preserve-proportions u-image-1"
-                 src="./images/image1.png" alt="" data-image-width="512" data-image-height="512"
-                 data-animation-name="customAnimationIn" data-animation-duration="1000">
-            <div class="u-expanded-width-xs u-list u-list-2">
-                <div class="u-repeater u-repeater-2">
-                    <div class="u-container-style u-list-item u-repeater-item u-shape-rectangle">
-                        <div class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-1">
-                            <p class="u-align-left u-custom-item u-text u-text-default-lg u-text-default-xl u-text-2"
-                               data-animation-name="customAnimationIn" data-animation-duration="1000">
-                                Para ser um
-                                transportador escolar as autoridades de trânsito&nbsp;<br>realizam 4 vistorias anuais
-                                onde são verificados ítens como:<br>
-                            </p>
-                            <ul class="u-align-left u-custom-item u-text u-text-default-lg u-text-default-xl u-text-3"
-                                data-animation-name="customAnimationIn" data-animation-duration="1000">
-                                <li>Pneus</li>
-                                <li>Cinto de segurança</li>
-                                <li>Tacógrafo</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="u-container-style u-list-item u-repeater-item u-shape-rectangle">
-                        <div class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-2">
-                            <p class="u-align-left u-custom-item u-text u-text-default-lg u-text-default-xl u-text-4"
-                               data-animation-name="customAnimationIn" data-animation-duration="1000">
-                                Além de exigir
-                                dos motoristas habilitação especifica para<br>transporte escolar&nbsp;também é
-                                obrigatório a apresentação:<br>
-                            </p>
-                            <ul class="u-align-left u-custom-item u-text u-text-default-lg u-text-default-xl u-text-5"
-                                data-animation-name="customAnimationIn" data-animation-duration="1000">
-                                <li>Antecedentes criminais</li>
-                                <li>Exame toxicológico</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 </body>
-
 </html>
