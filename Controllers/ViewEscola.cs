@@ -25,8 +25,11 @@ namespace Acesvv.Controllers
             return -1;
         }
         // GET: Dados
-        public IActionResult Index(string nomeEscolaEscolhida)
+        public IActionResult Index(string nomeEscolaEscolhida, int pagina = 1)
         {
+
+            ViewBag.EscolaSelecionada = nomeEscolaEscolhida;
+
             if (string.IsNullOrEmpty(nomeEscolaEscolhida))
             {
                 ViewBag.ErrorMessage = "Escola não selecionada.";
@@ -42,10 +45,24 @@ namespace Acesvv.Controllers
             }
 
             var transportadores = _context.Dados.Where(d => d.EscolasSelecionadas.Contains(escolaId.ToString())).ToList();
-            ViewBag.Transportadores = transportadores; // Preencha a propriedade ViewBag.Transportadores
+            int totalTransportadores = transportadores.Count();
+
+            int transportadoresPorPagina = 5;
+
+            int totalPaginas = (int)Math.Ceiling((double)totalTransportadores / transportadoresPorPagina);
 
 
-            return View(transportadores);
+            var transportadoresPaginaAtual = transportadores
+                .Skip((pagina - 1) * transportadoresPorPagina)
+                .Take(transportadoresPorPagina)
+                .ToList();
+
+            ViewBag.Transportadores = transportadoresPaginaAtual;
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalPaginas = totalPaginas;
+            ViewBag.Resultados = totalTransportadores;
+
+            return View(transportadoresPaginaAtual);
         }
 
 
