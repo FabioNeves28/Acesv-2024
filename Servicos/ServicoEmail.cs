@@ -21,11 +21,11 @@ namespace Mvc_ConfRec.Servicos
             {
 
                 //TODO: Verificar se é necessário alterar as configurações de email, host esta dando timeout
-                string emailFrom = "contato@acesv.com.br";
-                string smtpHost = "mail.acesv.com.br";
+                string emailFrom = "fabioalvesneves@gmail.com";
+                string smtpHost = "smtp.gmail.com";
                 string smtpPorta = "465";
-                string userName = "contato@acesv.com.br";
-                string password = _configuration["HashPasswords:Key"];
+                string userName = "fabioalvesneves@gmail.com";
+                string password = "xcrw vvhr qoll nfaj";
                 string enableSSL = "true";
 
                 MailMessage eMail = new MailMessage();
