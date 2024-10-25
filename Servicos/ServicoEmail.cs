@@ -20,7 +20,6 @@ namespace Mvc_ConfRec.Servicos
             try
             {
 
-                //TODO: Verificar se é necessário alterar as configurações de email, host esta dando timeout
                 string emailFrom = "acesv2024@gmail.com";
                 string smtpHost = "smtp.gmail.com";
                 string smtpPorta = "587";
@@ -31,28 +30,22 @@ namespace Mvc_ConfRec.Servicos
                 MailMessage eMail = new MailMessage();
 
 
-                //Email De
-                eMail.From = new MailAddress(emailFrom.ToString());
+                                eMail.From = new MailAddress(emailFrom.ToString());
 
                 emailPara = emailPara.Replace(';', ',');
                 if (!string.IsNullOrEmpty(emailCC))
                     emailCC = emailCC.Replace(';', ',');
 
-                //Email Para
-                eMail.To.Add(emailPara.TrimEnd(','));
+                                eMail.To.Add(emailPara.TrimEnd(','));
 
-                //Email CC
-                if (!string.IsNullOrEmpty(emailCC))
+                                if (!string.IsNullOrEmpty(emailCC))
                     eMail.CC.Add(emailCC.TrimEnd(','));
 
-                //Assunto
-                eMail.Subject = assunto.ToString();
+                                eMail.Subject = assunto.ToString();
 
-                //Mensagem
-                eMail.IsBodyHtml = true;
+                                eMail.IsBodyHtml = true;
 
-                // Obtem os anexos contidos em um arquivo arraylist e inclui na mensagem
-                if (caminhoAnexos != null)
+                                if (caminhoAnexos != null)
                 {
                     foreach (string anexo in caminhoAnexos)
                     {
@@ -66,23 +59,19 @@ namespace Mvc_ConfRec.Servicos
                     ms.Write(anexoBinario, 0, anexoBinario.Length);
                     ms.Seek(0, SeekOrigin.Begin);
 
-                    // Create attachment
-                    ContentType ct = new ContentType();
+                                        ContentType ct = new ContentType();
                     ct.MediaType = MediaTypeNames.Application.Octet;
-                    //ct.Name = nomeAnexo;
-
+                    
                     Attachment attach = new Attachment(ms, ct);
                     attach.ContentDisposition.FileName = nomeAnexoBinario;
                     eMail.Attachments.Add(attach);
                 }
 
-                //Cria uma visualização alternativa do HTML 
-                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(corpoMensagem.ToString(), null, System.Net.Mime.MediaTypeNames.Text.Html);
+                                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(corpoMensagem.ToString(), null, System.Net.Mime.MediaTypeNames.Text.Html);
 
                 eMail.AlternateViews.Add(htmlView);
 
-                //Informações do SMTP 
-                SmtpClient smtp = new SmtpClient();
+                                SmtpClient smtp = new SmtpClient();
                 smtp.DeliveryFormat = SmtpDeliveryFormat.International;
                 smtp.Host = smtpHost.ToString();
                 smtp.Port = Convert.ToInt32(smtpPorta.ToString());

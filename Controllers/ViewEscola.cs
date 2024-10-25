@@ -20,12 +20,9 @@ namespace Acesvv.Controllers
                 return escola.Id;
             }
 
-            // Se a escola não for encontrada, retorne um valor padrão ou lance uma exceção, dependendo da sua lógica.
-            // Neste exemplo, estamos retornando -1 se a escola não for encontrada.
-            return -1;
+                                    return -1;
         }
-        // GET: Dados
-        public IActionResult Index(string nomeEscolaEscolhida, int pagina = 1)
+                public IActionResult Index(string nomeEscolaEscolhida, int pagina = 1)
         {
 
             ViewBag.EscolaSelecionada = nomeEscolaEscolhida;

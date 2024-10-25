@@ -46,23 +46,20 @@
 </style>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+<script src="https:<script>
     $(document).ready(function () {
         $('#Cep').on('change', function () {
             var cep = $(this).val();
             if (cep.length === 8) {
                 $.ajax({
-                    url: 'https://viacep.com.br/ws/' + cep + '/json/',
-                    type: 'GET',
+                    url: 'https:                    type: 'GET',
                     dataType: 'json',
                     success: function (data) {
                         $('#Endereco').val(data.logradouro);
                         $('#Bairro').val(data.bairro);
                     },
                     error: function () {
-                        // Tratar erro, se necessário
-                    }
+                                            }
                 });
             }
         });

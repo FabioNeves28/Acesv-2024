@@ -6,9 +6,7 @@
 
 <h1>@ViewData["Title"]</h1>
 <!-- Adicione isso no cabeçalho (head) da sua página -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/jquery.inputmask.min.js"></script>
-<!-- Adicione isso antes do fechamento da tag </body> -->
+<script src="https:<script src="https:<!-- Adicione isso antes do fechamento da tag </body> -->
 <!-- Seu código HTML existente -->
 
 
@@ -18,8 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cadastro ACESV</title>
         <!-- Link para Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link rel="stylesheet" href="~/css/registro.css">
+        <link rel="stylesheet" href="https:        <link rel="stylesheet" href="~/css/registro.css">
         <script defer src="~/js/registro.js"></script>
     </head>
 
@@ -76,22 +73,19 @@
                 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                     <div class="field-group">
                         <label for="email">
-                            <img src="https://img.icons8.com/material-outlined/24/000000/new-post.png" alt="E-mail Icon" />
-                        </label>
+                            <img src="https:                        </label>
                         <input asp-for="Input.Cpf" oninput="mascara(this, 'cpf')" id="cpfInput" class="form-control" autocomplete="new-password" aria-required="true" maxlength="11" placeholder="CPF" />
                         <span asp-validation-for="Input.Cpf" class="text-danger"></span>
                     </div>
                     <div class="field-group">
                         <label for="email">
-                            <img src="https://img.icons8.com/material-outlined/24/000000/new-post.png" alt="E-mail Icon" />
-                        </label>
+                            <img src="https:                        </label>
                         <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" id="email" placeholder="Email" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="field-group">
                         <label for="senha">
-                            <img src="https://img.icons8.com/?size=24&id=82747&format=png&color=000000" alt="password Icon" />
-                        </label>
+                            <img src="https:                        </label>
                         <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" id="senha" placeholder="Senha" />
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                         <span class="show-password" onclick="togglePassword('senha')">
@@ -100,8 +94,7 @@
                     </div>
                     <div class="field-group">
                         <label for="confirmar-senha">
-                            <img src="https://img.icons8.com/?size=24&id=82747&format=png&color=000000" alt="Password Icon" />
-                        </label>
+                            <img src="https:                        </label>
                         <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" id="confirmar-senha" placeholder="Confirme sua Senha" />
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         <span class="show-password" onclick="togglePassword('confirmar-senha')">
@@ -110,8 +103,7 @@
                     </div>
                     @*            <div class="field-group">
                     <label for="telefone">
-                    <img src="https://img.icons8.com/?size=24&id=85928&format=png&color=000000" alt="Phone Icon" />
-                    </label>
+                    <img src="https:                    </label>
                     <input type="tel" id="telefone" placeholder="+55 (__) _____-____" required>
                     </div> *@
                     <br />
