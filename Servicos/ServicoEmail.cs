@@ -21,11 +21,11 @@ namespace Mvc_ConfRec.Servicos
             {
 
                 //TODO: Verificar se é necessário alterar as configurações de email, host esta dando timeout
-                string emailFrom = "contato@acesv.com.br";
-                string smtpHost = "mail.acesv.com.br";
-                string smtpPorta = "465";
-                string userName = "contato@acesv.com.br";
-                string password = _configuration["HashPasswords:Key"];
+                string emailFrom = "acesv2024@gmail.com";
+                string smtpHost = "smtp.gmail.com";
+                string smtpPorta = "587";
+                string userName = "acesv2024@gmail.com";
+                string password = "zxpr brfk fdwe rtct";
                 string enableSSL = "true";
 
                 MailMessage eMail = new MailMessage();
@@ -86,7 +86,7 @@ namespace Mvc_ConfRec.Servicos
                 smtp.DeliveryFormat = SmtpDeliveryFormat.International;
                 smtp.Host = smtpHost.ToString();
                 smtp.Port = Convert.ToInt32(smtpPorta.ToString());
-                smtp.EnableSsl = Convert.ToBoolean(enableSSL);
+                smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = new System.Net.NetworkCredential(userName, password);
                 smtp.Send(eMail);
