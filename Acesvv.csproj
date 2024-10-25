@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Views\Login\TelaDeLogin.html" />
-  </ItemGroup>
-
-  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\method_pt.js" />
   </ItemGroup>
 
