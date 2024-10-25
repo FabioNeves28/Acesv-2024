@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Acesvv.Areas.Identity.Data;
 
+// Add profile data for application users by adding properties to the UsuarioModel class
 public class UsuarioModel : IdentityUser
 {
 

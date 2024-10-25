@@ -16,12 +16,14 @@ namespace Acesvv.Controllers
             _context = context;
         }
 
-                public async Task<IActionResult> Index()
+        // GET: Financeiro
+        public async Task<IActionResult> Index()
         {
             return View(await _context.Financeiro.ToListAsync());
         }
 
-                public async Task<IActionResult> Details(int? id)
+        // GET: Financeiro/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Financeiro == null)
             {
@@ -38,7 +40,8 @@ namespace Acesvv.Controllers
             return View(financeiro);
         }
 
-                public IActionResult Create()
+        // GET: Financeiro/Create
+        public IActionResult Create()
         {
             var meses = Enum.GetValues(typeof(Mes)).Cast<Mes>().Select(m => new SelectListItem
             {
@@ -50,13 +53,17 @@ namespace Acesvv.Controllers
             return View();
         }
 
-                                [HttpPost]
+        // POST: Financeiro/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Mes,Saldo_Mes,Arrecadacao_Mensalidade_Atrasada,Arrecadacao_Mensalidade_Antecipadas,Total_Entradas,Vencimento,Contabilidade,Tarifa_Bancaria,Apolice_Seguro,Advogada,Renovacao_Assinatura,Taxas_Bancarias,Taxa_Internet,Total_Gastos,Total_Liquido")] Financeiro financeiro)
         {
             if (ModelState.IsValid)
             {
-                
+                // Convertendo as colunas de string para double
+
                 _context.Add(financeiro);
                 await _context.SaveChangesAsync();
 
@@ -64,14 +71,16 @@ namespace Acesvv.Controllers
 
 
 
-                
+                // Faça algo com pdfStream, como salvá-lo ou enviá-lo para o cliente
+
 
             }
             return View(financeiro);
         }
 
 
-                public async Task<IActionResult> Edit(int? id)
+        // GET: Financeiro/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Financeiro == null)
             {
@@ -86,7 +95,10 @@ namespace Acesvv.Controllers
             return View(financeiro);
         }
 
-                                [HttpPost]
+        // POST: Financeiro/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Saldo_Mes,Arrecadacao_Mensalidade_Atrasada,Arrecadacao_Mensalidade_Antecipadas,Total_Entradas,Vencimento,Contabilidade,Tarifa_Bancaria,Apolice_Seguro,Advogada,Renovacao_Assinatura,Taxas_Bancarias,Taxa_Internet,Total_Gastos,Total_Liquido")] Financeiro financeiro)
         {
@@ -118,7 +130,8 @@ namespace Acesvv.Controllers
             return View(financeiro);
         }
 
-                public async Task<IActionResult> Delete(int? id)
+        // GET: Financeiro/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Financeiro == null)
             {
@@ -135,7 +148,8 @@ namespace Acesvv.Controllers
             return View(financeiro);
         }
 
-                [HttpPost, ActionName("Delete")]
+        // POST: Financeiro/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

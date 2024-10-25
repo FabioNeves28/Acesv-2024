@@ -12,7 +12,8 @@ namespace Acesvv.Controllers
             _context = context;
         }
 
-                public async Task<IActionResult> Index()
+        // GET: Dados
+        public async Task<IActionResult> Index()
         {
             var dadosEscola = _context.Dados.Where(d => d.Escola.NomeEscola == "Caminhos do Saber").ToList();
 

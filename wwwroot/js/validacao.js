@@ -1,1 +1,2 @@
+//Validação simples
 $("#msform").validate();

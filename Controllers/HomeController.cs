@@ -19,7 +19,8 @@ namespace Acesvv.Controllers
 
         public IActionResult Index()
         {
-                        var escolas = _context.Escolas.ToList();
+            //Retorna todas as escolas da tabela Escolas
+            var escolas = _context.Escolas.ToList();
             ViewBag.Escolas = new SelectList(escolas, "Id", "NomeEscola");
             return View();
 

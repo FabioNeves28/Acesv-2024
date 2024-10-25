@@ -65,7 +65,8 @@ namespace Acesvv.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
 
-                                if (user?.Chave_ADM == 1)
+                // Verifica se o usuário tem Chave_ADM igual a 1
+                if (user?.Chave_ADM == 1)
                 {
                     returnUrl = Url.Content("~/Home/Privacy");
                 }

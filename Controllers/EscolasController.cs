@@ -14,12 +14,14 @@ namespace Acesvv.Controllers
             _context = context;
         }
 
-                public async Task<IActionResult> Index()
+        // GET: Escolas
+        public async Task<IActionResult> Index()
         {
             return View(await _context.Escolas.ToListAsync());
         }
 
-                public async Task<IActionResult> Details(int? id)
+        // GET: Escolas/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Escolas == null)
             {
@@ -36,12 +38,16 @@ namespace Acesvv.Controllers
             return View(escola);
         }
 
-                public IActionResult Create()
+        // GET: Escolas/Create
+        public IActionResult Create()
         {
             return View();
         }
 
-                                [HttpPost]
+        // POST: Escolas/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NomeEscola")] Escola escola)
         {
@@ -54,7 +60,8 @@ namespace Acesvv.Controllers
             return View(escola);
         }
 
-                public async Task<IActionResult> Edit(int? id)
+        // GET: Escolas/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Escolas == null)
             {
@@ -69,7 +76,10 @@ namespace Acesvv.Controllers
             return View(escola);
         }
 
-                                [HttpPost]
+        // POST: Escolas/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NomeEscola")] Escola escola)
         {
@@ -101,7 +111,8 @@ namespace Acesvv.Controllers
             return View(escola);
         }
 
-                public async Task<IActionResult> Delete(int? id)
+        // GET: Escolas/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Escolas == null)
             {
@@ -118,7 +129,8 @@ namespace Acesvv.Controllers
             return View(escola);
         }
 
-                [HttpPost, ActionName("Delete")]
+        // POST: Escolas/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
