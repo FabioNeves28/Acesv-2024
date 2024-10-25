@@ -10,13 +10,11 @@
 
     var QtdUsers = "";
 
-    // Executa a consulta SQL para obter o valor do campo EditId
 
     using (var connection = new SqlConnection($"Data Source={Environment.MachineName}; Initial Catalog=Dados;Integrated Security=True;"))
     {
         connection.Open();
 
-        // Consulta SQL para obter o CPF do usuário logado com base no email
         var queryQtd = "SELECT COUNT(*) FROM Dados";
         using (var commandQtd = new SqlCommand(queryQtd, connection))
         {
