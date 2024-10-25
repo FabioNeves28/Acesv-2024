@@ -1,5 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Documentos e Pagamento";
+    bool isAuthenticated = User.Identity.IsAuthenticated;
 }
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -8,21 +9,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentos e Pagamento</title>
     <link rel="stylesheet" href="/css/telaposlogin.css">
-    <style>
-        .mb-3 {
-            margin-bottom: 0 !important;
-        }
-
-        .pb-3 {
-            padding-bottom: 0 !important;
-        }
-        .w-100 {
-            width: 68% !important;
-        }
-
-    </style>
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var isAuthenticated = @Html.Raw(Json.Serialize(isAuthenticated));
+            if (!isAuthenticated) {
+                window.location.href = '/Identity/Account/AccessDeniedLogin';
+            }
+        });
+    </script>
     <div class="container">
 
         <section class="documentos">
@@ -33,33 +29,39 @@
                 <div>
                     <img src="/src/pdff.png" alt="PDF Icon">
                     <p>DETRAN<br>Requerimento de vistoria</p>
-                    <form method="get" action="requerimento.pdf">
+                    <form method="get" action="~/docs/requerimento.pdf">
                         <button class="btn" download="requerimento.pdf"><img src="/src/download-icon.png" alt="Download Icon" style="width: 20px; height: 20px; margin-right: 5px;"> Download</button>
                     </form>
                 </div>
                 <div>
                     <img src="/src/pdff.png" alt="PDF Icon">
                     <p>DETRAN<br>Protocolo de entrega de documentos</p>
-                    <form method="get" action="protocolo.pdf">
+                    <form method="get" action="~/docs/protocolo.pdf">
                         <button class="btn" download="protocolo.pdf"><img src="/src/download-icon.png" alt="Download Icon" style="width: 20px; height: 20px; margin-right: 5px;"> Download</button>
                     </form>
                 </div>
                 <div>
                     <img src="/src/pdff.png" alt="PDF Icon">
                     <p>SETRANS/DETRAN<br>Relação de documentos para vistoria</p>
-                    <form method="get" action="folha.pdf">
+                    <form method="get" action="~/docs/folha.pdf">
                         <button class="btn" download="folha.pdf"><img src="/src/download-icon.png" alt="Download Icon" style="width: 20px; height: 20px; margin-right: 5px;"> Download</button>
                     </form>
                 </div>
                 <div>
                     <img src="/src/pdff.png" alt="PDF Icon">
                     <p>Decreto 4386-A<br>Transporte escolar no município</p>
-                    <form method="get" action="decreto.pdf">
+                    <form method="get" action="~/docs/decreto.pdf">
                         <button class="btn" download="decreto.pdf"><img src="/src/download-icon.png" alt="Download Icon" style="width: 20px; height: 20px; margin-right: 5px;"> Download</button>
+                    </form>
+                </div>                
+                <div>
+                    <img src="/src/pdff.png" alt="PDF Icon">
+                    <p>Estatuto da associação:</p>
+                    <form method="get" action="~/docs/estatuto.pdf">
+                        <button class="btn" download="estatuto.pdf"><img src="/src/download-icon.png" alt="Download Icon" style="width: 20px; height: 20px; margin-right: 5px;"> Download</button>
                     </form>
                 </div>
             </div>
-            <a href="#" class="mostrar-mais">exibir mais arquivos</a>
         </section>
 
         <hr /><br />
@@ -71,8 +73,8 @@
         <section class="contrato-Imagem">
             <img src="/src/pdff.png" alt="PDF Icon">
             <p>Contrato Associados</p>
-            <form method="get" action="contrato.pdf">
-                <button class="btn" download="contrato.pdf" style="display: flex; align-items: center;">
+            <form method="get" action="~/docs/contrato24.pdf">
+                <button class="btn" download="contrato24.pdf" style="display: flex; align-items: center;">
                     <img src="/src/download-icon.png" alt="Download Icon" style="width: 20px; height: 20px; margin-right: 5px;"> Download
                 </button>
             </form>
