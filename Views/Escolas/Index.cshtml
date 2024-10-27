@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Escolas";
+    bool isAuthenticated = User.Identity.IsAuthenticated;
 }
 
 <h1>Index</h1>
@@ -9,6 +10,14 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var isAuthenticated = @Html.Raw(Json.Serialize(isAuthenticated));
+        if (!isAuthenticated) {
+            window.location.href = '/Identity/Account/AccessDeniedLogin';
+        }
+    });
+</script>
 <table class="table">
     <thead>
         <tr>
