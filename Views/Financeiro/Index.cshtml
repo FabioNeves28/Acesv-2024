@@ -5,7 +5,7 @@
     bool isAuthenticated = User.Identity.IsAuthenticated;
 }
 
-<h1>Index</h1>
+<h1>Financeiro</h1>
 
 @Html.ActionLink("Baixar PDF", "DownloadPdf", "Financeiro", null, new { @class = "btn btn-primary" })
 
@@ -22,7 +22,7 @@
     });
 </script>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar novo</a>
 </p>
 <button id="btnDownload">Baixar Relatório</button>
 

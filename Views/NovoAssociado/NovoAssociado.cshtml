@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Novo Associado";
+}
+@model Acesvv.Models.NovoAssociadoModel
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+    .pb-3 {
+        padding-bottom: 0 !important;
+    }
+    .container {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .reset-password-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        padding: 10px;
+        background-color: #f8f9fa;
+    }
+    .reset-password-form {
+        background-color: #0099FF;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 452px;
+    }
+    .reset-password-form h2 {
+        color: #495057;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    .form-control {
+        border-radius: 4px;
+    }
+    .btn-primary {
+        background-color: #FFF;
+        border: none;
+        padding: 0.75rem;
+        font-size: 1rem;
+        color: #000;
+        font-weight: 600;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .text-danger {
+        font-size: 0.9rem;
+    }
+
+    .login-text {
+        order: 2;
+        margin-top: 1rem;
+        text-align: center;
+    }
+</style>
+<div class="reset-password-container">
+    <h1>Área do Associado</h1>
+    <h9>Sessão restrita apenas aos associados.</h9>
+    <br />
+    <div class="reset-password-form">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <img src="~/src/cadeado.png" style="padding-bottom: 20px;" />
+            <div class="form-floating mb-3">
+                <input asp-for="Codigo" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Codigo" class="form-label" placeholder="Digite seu código de associado">Código</label>
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Enviar</button>
+        </form>
+    </div>
+    <p class="login-text">Já tem uma conta? Clique <a href="/Identity/Account/Login">aqui</a> e faça login</p>
+</div>
+

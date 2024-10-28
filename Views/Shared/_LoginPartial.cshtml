@@ -152,7 +152,7 @@
                                 <img src="https://cdn-icons-png.flaticon.com/512/159/159612.png" width="20" height="20"> Atualizar dados
                             </a>
 
-                            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Configurações"><img src="https://cdn-icons-png.flaticon.com/512/3524/3524752.png" width="20" height="20">   Configurações</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Financeiro"><img src="https://cdn-icons-png.flaticon.com/512/64/64972.png" width="20" height="20">Financeiro</a>
                             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                 <button id="logout" type="submit" class="nav-link btn btn-link text-dark"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" width="20" height="20"> Sair</button>
                             </form>
@@ -191,7 +191,7 @@
     {
 
         <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Registrar</a>
+            <a class="nav-link text-dark" asp-controller="NovoAssociado" asp-action="NovoAssociado">Registrar</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
