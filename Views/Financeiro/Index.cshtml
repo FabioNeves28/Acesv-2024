@@ -37,7 +37,7 @@
                         var financeiroMes = Model.FirstOrDefault(item => item.Mes == mes);
                         if (financeiroMes != null)
                         {
-                            <a href="@Url.Action("Edit", "Financeiro", new { id = financeiroMes.ID })" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="@Url.Action("Edit", "Financeiro", new { id = financeiroMes.ID })" class="btn btn-sm btn-primary" id="edit">Editar</a>
                         }
                     }
                     <br />
