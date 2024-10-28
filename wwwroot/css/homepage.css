@@ -34,7 +34,7 @@ section.hero {
     position: relative;
     overflow: hidden;
     height: 85vh;
-    padding-left: 35px;
+    padding-left: 140px;
 }
 
 .hero-content {
@@ -192,7 +192,7 @@ section.hero {
 
 .faq-item {
     margin-bottom: 10px;
-    background-color: #D1E4FF;
+    background-color: #FFF;
     border-radius: 8px;
     padding: 15px;
     cursor: pointer;
@@ -255,6 +255,7 @@ footer {
 li {
     padding: 10px;
 }
+
 * {
     margin: 0;
     padding: 0;

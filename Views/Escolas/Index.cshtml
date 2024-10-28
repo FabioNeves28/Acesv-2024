@@ -4,12 +4,15 @@
     ViewData["Title"] = "Escolas";
     bool isAuthenticated = User.Identity.IsAuthenticated;
 }
-
+<style>
+    .w-100{
+        width: 20% !important;
+    }
+</style>
 <h1>Escolas</h1>
 
 <p>
-    <a asp-action="Create">Criar novo</a>
-</p>
+    <a asp-action="Create"><button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Criar nova escola</button></a></p>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var isAuthenticated = @Html.Raw(Json.Serialize(isAuthenticated));
@@ -22,7 +25,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NomeEscola)
+                Nome da Escola
             </th>
             <th></th>
         </tr>
