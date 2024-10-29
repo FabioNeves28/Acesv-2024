@@ -122,17 +122,33 @@ section.hero {
     .info-section img {
         width: 45%;
         max-width: 600px;
-        border-radius: 8px;
         margin-right: 20px;
+        
     }
 
 .info-text {
-    flex: 1;
-    font-size: 1.2em;
+    margin-top:70px;
+    font-size: 1.8em;
     color: #333;
-    margin-left: auto;
-    text-align: right;
+    margin-bottom: 15px;
+    line-height: 30px;
 }
+
+.info-p {
+    font-size: 20px;
+}
+
+.info-p2 {
+    font-weight: bold;
+}
+
+.info-h2 {
+    font-size: 1.8em;
+    color: #000;
+    margin-bottom: 50px;
+    line-height: 1.2;
+}
+
 
 .diretores-section {
     text-align: center;
