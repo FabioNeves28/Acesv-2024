@@ -73,12 +73,32 @@ namespace Acesvv.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
-
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-
+            var cpf = Convert.ToString(Input.Cpf);
+            if (!IsCpf(cpf))
+            {
+                ModelState.AddModelError(string.Empty, "CPF inválido.");
+            }
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            if(Input.Cpf is null or "" || Input.Email is null or "" || Input.Password is null or "" || Input.ConfirmPassword is null or "")
+            {
+                ModelState.AddModelError(string.Empty, "Preencha todos os campos corretamente");
+                return Page();
+            }
+            if (Input.Password.Length < 6)
+            {
+                ModelState.AddModelError(string.Empty, "A senha deve ter no mínimo 6 caracteres.");
+            }
+            if (!Input.Password.Any(c => "!@#$%^&*()".Contains(c)))
+            {
+                ModelState.AddModelError(string.Empty, "A senha deve conter pelo menos um caractere especial como !, @, #.");
+            }
+            if (Input.Password != Input.ConfirmPassword)
+            {
+                ModelState.AddModelError(string.Empty, "A senha e a confirmação da senha não são iguais.");
+            }
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -87,7 +107,6 @@ namespace Acesvv.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
-
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -121,6 +140,41 @@ namespace Acesvv.Areas.Identity.Pages.Account
             }
 
             return Page();
+        }
+        public static bool IsCpf(string cpf)
+        {
+            int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            string tempCpf;
+            string digito;
+            int soma;
+            int resto;
+            cpf = cpf.Trim();
+            cpf = cpf.Replace(".", "").Replace("-", "");
+            if (cpf.Length != 11)
+                return false;
+            tempCpf = cpf.Substring(0, 9);
+            soma = 0;
+
+            for (int i = 0; i < 9; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
+            resto = soma % 11;
+            if (resto < 2)
+                resto = 0;
+            else
+                resto = 11 - resto;
+            digito = resto.ToString();
+            tempCpf = tempCpf + digito;
+            soma = 0;
+            for (int i = 0; i < 10; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
+            resto = soma % 11;
+            if (resto < 2)
+                resto = 0;
+            else
+                resto = 11 - resto;
+            digito = digito + resto.ToString();
+            return cpf.EndsWith(digito);
         }
 
         private UsuarioModel CreateUser()

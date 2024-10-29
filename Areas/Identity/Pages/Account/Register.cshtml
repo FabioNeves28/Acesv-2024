@@ -10,18 +10,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/jquery.inputmask.min.js"></script>
 <!-- Adicione isso antes do fechamento da tag </body> -->
 <!-- Seu código HTML existente -->
-
-
 <!-- Script para aplicar a máscara -->
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cadastro ACESV</title>
-        <!-- Link para Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link rel="stylesheet" href="~/css/registro.css">
-        <script defer src="~/js/registro.js"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro ACESV</title>
+    <!-- Link para Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/css/registro.css">
+    <script defer src="~/js/registro.js"></script>
+</head>
 
 <script>
     function mascara(i, t) {
@@ -32,12 +30,12 @@
             i.value = v.substring(0, v.length - 1);
             return;
         }
-        
-   if(t == "cpf"){
-      i.setAttribute("maxlength", "14");
-      if (v.length == 3 || v.length == 7) i.value += ".";
-      if (v.length == 11) i.value += "-";
-   }
+
+        if (t == "cpf") {
+            i.setAttribute("maxlength", "14");
+            if (v.length == 3 || v.length == 7) i.value += ".";
+            if (v.length == 11) i.value += "-";
+        }
     }
 </script>
 
@@ -69,31 +67,51 @@
                     if (v.length == 11) i.value += "-";
                 }
             }
+            document.getElementById("registerForm").addEventListener("submit", function (event) {
+                const password = document.getElementById("senha").value;
+                const confirmPassword = document.getElementById("confirmar-senha").value;
+                let errorMessage = "";
+
+                if (password.length < 6) {
+                    errorMessage += "A senha deve ter no mínimo 6 caracteres.\n";
+                }
+
+                if (!/[!#$%^&*()]/.test(password)) {
+                    errorMessage += "A senha deve conter pelo menos um caractere especial como !, #.\n";
+                }
+
+                if (password !== confirmPassword) {
+                    errorMessage += "A senha e a confirmação da senha não são iguais.\n";
+                }
+
+                if (errorMessage) {
+                    event.preventDefault();  // Impede o envio do formulário
+                    alert(errorMessage);  // Exibe a mensagem de erro
+                }
+            });
         </script>
         <div class="wrapper">
             <div class="form-wrapper">
                 <h2>CADASTRE-SE</h2>
-                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" style="display:flex; justify-content:center"></div><br />
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" novalidate>
                     <div class="field-group">
                         <label for="email">
                             <img src="https://img.icons8.com/material-outlined/24/000000/new-post.png" alt="E-mail Icon" />
                         </label>
                         <input asp-for="Input.Cpf" oninput="mascara(this, 'cpf')" id="cpfInput" class="form-control" autocomplete="new-password" aria-required="true" maxlength="11" placeholder="CPF" />
-                        <span asp-validation-for="Input.Cpf" class="text-danger"></span>
                     </div>
                     <div class="field-group">
                         <label for="email">
                             <img src="https://img.icons8.com/material-outlined/24/000000/new-post.png" alt="E-mail Icon" />
                         </label>
                         <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" id="email" placeholder="Email" />
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="field-group">
                         <label for="senha">
                             <img src="https://img.icons8.com/?size=24&id=82747&format=png&color=000000" alt="password Icon" />
                         </label>
                         <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" id="senha" placeholder="Senha" />
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
                         <span class="show-password" onclick="togglePassword('senha')">
                             <i class="far fa-eye" id="eye-senha"></i>
                         </span>
@@ -103,17 +121,10 @@
                             <img src="https://img.icons8.com/?size=24&id=82747&format=png&color=000000" alt="Password Icon" />
                         </label>
                         <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" id="confirmar-senha" placeholder="Confirme sua Senha" />
-                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         <span class="show-password" onclick="togglePassword('confirmar-senha')">
                             <i class="far fa-eye" id="eye-confirmar-senha"></i>
                         </span>
                     </div>
-                    @*            <div class="field-group">
-                    <label for="telefone">
-                    <img src="https://img.icons8.com/?size=24&id=85928&format=png&color=000000" alt="Phone Icon" />
-                    </label>
-                    <input type="tel" id="telefone" placeholder="+55 (__) _____-____" required>
-                    </div> *@
                     <br />
                     <center>
                         <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Cadastrar</button>
@@ -127,7 +138,3 @@
         </div>
     </body>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
