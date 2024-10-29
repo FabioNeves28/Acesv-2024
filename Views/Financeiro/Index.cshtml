@@ -76,6 +76,7 @@
                             double soma = valores.Sum();
 
                             double totalEntradas = saldoMes + menAtrasada + menAntecipada;
+                            double totalLiquido = totalEntradas - soma;
 
                             @(descricao == "Saldo Mês anterior" ? financeiroMes.Saldo_Mes :
                                 descricao == "Arrecadação Mensalidades Atrasadas" ? financeiroMes.Arrecadacao_Mensalidade_Atrasada :
@@ -90,7 +91,7 @@
                                 descricao == "Taxas Bancárias" ? financeiroMes.Taxas_Bancarias :
                                 descricao == "Taxa de Internet" ? financeiroMes.Taxa_Internet :
                                 descricao == "Total Gastos" ? soma :
-                                descricao == "Total Líquido" ? financeiroMes.Total_Liquido : "-")
+                                descricao == "Total Líquido" ? totalLiquido : "-")
                         }
                         else
                         {
