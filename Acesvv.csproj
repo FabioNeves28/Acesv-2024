@@ -18,8 +18,10 @@
   <ItemGroup>
     <Content Remove="wwwroot\css\teladelogin.cs" />
     <Content Remove="wwwroot\js\method_pt.js" />
+    <Content Remove="wwwroot\src\bostaaa.png" />
     <Content Remove="wwwroot\src\crianca.png" />
     <Content Remove="wwwroot\src\criancas.png" />
+    <Content Remove="wwwroot\src\tese.png" />
   </ItemGroup>
 
   <ItemGroup>
