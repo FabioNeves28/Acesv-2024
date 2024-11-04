@@ -142,7 +142,7 @@
                         <img src="https://cdn-icons-png.flaticon.com/512/3106/3106921.png" width="30" height="30"><button onclick="myFunction()" class="dropbtn">  Conta</button>
                         <div id="myDropdown" class="dropdown-content">
                         <a class="nav-link text-dark" asp-controller="Dados"  asp-action="" title="Relatório"><img src="https://cdn-icons-png.flaticon.com/512/4702/4702631.png" width="20" height="20">   Relatório de Transportadores</a>
-                            <a class="nav-link text-dark" href="/Home/Privacy" title="Documentos"><img src="~/src/documentacao.png" width="20" height="20"> Documentação </a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy"  title="Documentos"><img src="~/src/documentacao.png" width="20" height="20"> Documentação </a>
 
                             <a id="manage" class="nav-link text-dark" asp-controller="Dados" asp-action="Create" title="Preenchiento dos Dados"><img src="https://cdn-icons-png.flaticon.com/512/4838/4838646.png" width="20" height="20">   Preenchimento de dados</a>
 
@@ -152,11 +152,7 @@
 
                                 <img src="https://cdn-icons-png.flaticon.com/512/159/159612.png" width="20" height="20"> Atualizar dados
                             </a>
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy" title="Documentação">
-                                <img src="https://cdn-icons-png.flaticon.com/512/7240/7240956.png" width="20" height="20"> Documentação
-                            </a>
-
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Financeiro"><img src="https://cdn-icons-png.flaticon.com/512/64/64972.png" width="20" height="20">Financeiro</a>
+                            <a class="nav-link text-dark" asp-action="Index" asp-controller="Financeiro"><img src="https://cdn-icons-png.flaticon.com/512/64/64972.png" width="20" height="20">Financeiro</a>
                             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                 <button id="logout" type="submit" class="nav-link btn btn-link text-dark"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" width="20" height="20"> Sair</button>
                             </form>

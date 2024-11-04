@@ -58,7 +58,7 @@ namespace Acesvv.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Mes,Saldo_Mes,Arrecadacao_Mensalidade_Atrasada,Arrecadacao_Mensalidade_Antecipadas,Total_Entradas,Vencimento,Contabilidade,Tarifa_Bancaria,Apolice_Seguro,Advogada,Renovacao_Assinatura,Taxas_Bancarias,Taxa_Internet,Total_Gastos,Total_Liquido")] Financeiro financeiro)
+        public async Task<IActionResult> Create([Bind("ID,Mes,Saldo_Mes,Arrecadacao_Mensalidade_Atrasada,Arrecadacao_Mensalidade_Antecipadas,Total_Entradas,Contabilidade,Tarifa_Bancaria,Apolice_Seguro,Advogada,Renovacao_Assinatura,Taxas_Bancarias,Taxa_Internet,Total_Gastos,Total_Liquido")] Financeiro financeiro)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace Acesvv.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Mes,Saldo_Mes,Arrecadacao_Mensalidade_Atrasada,Arrecadacao_Mensalidade_Antecipadas,Total_Entradas,Vencimento,Contabilidade,Tarifa_Bancaria,Apolice_Seguro,Advogada,Renovacao_Assinatura,Taxas_Bancarias,Taxa_Internet,Total_Gastos,Total_Liquido")] Financeiro financeiro)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Mes,Saldo_Mes,Arrecadacao_Mensalidade_Atrasada,Arrecadacao_Mensalidade_Antecipadas,Total_Entradas,Contabilidade,Tarifa_Bancaria,Apolice_Seguro,Advogada,Renovacao_Assinatura,Taxas_Bancarias,Taxa_Internet,Total_Gastos,Total_Liquido")] Financeiro financeiro)
         {
             if (id != financeiro.ID)
             {
