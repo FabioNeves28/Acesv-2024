@@ -1,27 +1,15 @@
-﻿* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    padding: 20px;
-}
-
-.container-formulario {
-    padding: 5px;
+﻿.container-formulario {
     display: flex;
-    box-shadow: 1px 5px 16px rgba(0, 0, 0);
-    height: 550px;
+    height: 85vh;
     border-radius: 10px;
     justify-content: space-between;
+    width: 100vw;
+    flex-direction: row-reverse;
 }
 
 .form-image {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     background-color: #6FC6FF;
     border-radius: 5px;
@@ -34,10 +22,10 @@ body {
     }
 
 .form {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    display: flex;
     width: 50%;
     padding: 3rem;
 }
@@ -47,8 +35,43 @@ body {
     margin-bottom: 20px;
 }
 
+    .form-header h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
     .form-header h3 {
-        text-align: center;
+        font-size: 16px;
+        color: #666;
         margin-bottom: 20px;
+    }
+
+.enter-bottons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+    .enter-bottons a {
+        color: #0d6efd;
+        text-decoration: none;
         font-size: 16px;
     }
+
+        .enter-bottons a:hover {
+            text-decoration: underline;
+        }
+
+.mb-3 {
+    margin-bottom: 0 !important;
+}
+
+.pb-3 {
+    padding-bottom: 0 !important;
+}
+
+.container {
+    margin: 0 !important;
+    padding: 0 !important;
+}
