@@ -14,7 +14,6 @@
         public string Arrecadacao_Mensalidade_Atrasada { get; set; }
         public string Arrecadacao_Mensalidade_Antecipadas { get; set; }
         public double Total_Entradas { get; set; }
-        public string Vencimento { get; set; }
         public string Contabilidade { get; set; }
         public string Tarifa_Bancaria { get; set; }
         public string Apolice_Seguro { get; set; }

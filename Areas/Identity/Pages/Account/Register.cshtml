@@ -68,10 +68,14 @@
                 }
             }
             document.getElementById("registerForm").addEventListener("submit", function (event) {
+                const cpf = document.getElementById("cpfInput").value;
                 const password = document.getElementById("senha").value;
                 const confirmPassword = document.getElementById("confirmar-senha").value;
                 let errorMessage = "";
 
+                if (!cpf.trim()) {
+                    errorMessage += "O campo CPF não pode estar vazio.\n";
+                }
                 if (password.length < 6) {
                     errorMessage += "A senha deve ter no mínimo 6 caracteres.\n";
                 }
@@ -85,10 +89,11 @@
                 }
 
                 if (errorMessage) {
-                    event.preventDefault();  // Impede o envio do formulário
-                    alert(errorMessage);  // Exibe a mensagem de erro
+                    event.preventDefault();
+                    alert(errorMessage); 
                 }
             });
+
         </script>
         <div class="wrapper">
             <div class="form-wrapper">
