@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace Acesvv.Areas.Identity.Pages.Account
 {
@@ -29,15 +31,15 @@ namespace Acesvv.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "O e-mail é obrigatório.")]
+            [EmailAddress(ErrorMessage = "O campo E-mail não é um endereço de e-mail válido.")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "A senha é obrigatória.")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Lembrar-me?")]
             public bool RememberMe { get; set; }
             public object Chave_ADM { get; set; }
         }
@@ -72,7 +74,7 @@ namespace Acesvv.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User  logged in.");
+                    _logger.LogInformation("Usuário logado.");
                     return LocalRedirect(returnUrl);
                 }
 
@@ -83,15 +85,17 @@ namespace Acesvv.Areas.Identity.Pages.Account
 
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User  account locked out.");
+                    _logger.LogWarning("Conta do usuário bloqueada.");
                     return RedirectToPage("./Lockout");
                 }
                 else
                 {
-                    
                     ModelState.AddModelError(string.Empty, "E-mail ou senha incorretos.");
-                    return Page();
                 }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Por favor, corrija os erros acima e tente novamente.");
             }
 
             return Page();
