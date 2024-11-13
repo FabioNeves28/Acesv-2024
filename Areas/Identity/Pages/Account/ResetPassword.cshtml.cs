@@ -29,13 +29,14 @@ namespace Acesvv.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required(ErrorMessage = "A senha é obrigatória.")]
-            [StringLength(100, ErrorMessage = "A senha deve ter pelo menos {2} e no máximo {1} caracteres de comprimento.", MinimumLength = 6)]
+            [StringLength(35, ErrorMessage = "A senha deve ter pelo menos {2} e no máximo {1} caracteres de comprimento.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirme a senha")]
             [Compare("Password", ErrorMessage = "As senhas não coincidem.")]
+            [Required(ErrorMessage = "Este campo é obrigatório.")]
             public string ConfirmPassword { get; set; }
 
             [Required(ErrorMessage = "Um código deve ser fornecido para a redefinição de senha.")]
